@@ -122,10 +122,10 @@ class MainActivity : AppCompatActivity() {
         return randomValue / 100f
     }
 
-    fun healthBar (){
-        val knightMaxHealth  = Knight.health
+    //fun healthBar (){
+      //  val knightMaxHealth  = Knight.health
 
-    }
+    //}
 
     fun criticalHit(character: Character): Boolean? {
         return when (character) {
