@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Lovag vs Zombi</string>
+    <string name="zombie_hit">Ütés a zombival</string>
+    <string name="knight_hit">Ütés a lovaggal</string>
+    <string name="successfull_hit">Sikeres ütés!</string>
+    <string name="notsuccessfull_hit">Sikertelen ütés</string>
+    <string name="start_fight">Kezd el a harcot!</string>
+    <string name="successfull_block">Sikeres blokkolás!</string>
+    <string name="critical_hit">Kritikus ütés!</string>
+
+    <string name="knight_skill1">Brutális ütés</string>
+    <string name="knight_skill2">Kritikus csapás</string>
+    <string name="knight_skill3">Precíz ütés</string>
+    <string name="knight_skill4">Élet szipolyozás</string>
+
+    <string name="knight_name_label">Lovag</string>
+    <string name="enemy_name_label">Zombi</string>
+    <string name="level_label">Szint</string>
+    <string name="health_label">Élet</string>
+    <string name="experience_label">Tapasztalat</string>
+    <string name="damage_label">Sebzés</string>
+    <string name="critical_hit_chance_label">Kritikus ütés</string>
+    <string name="block_chance_label">Blokkolás</string>
+    <string name="combat_section">Harcmező</string>
+    <string name="skill_bar">Képességek</string>
+    <string name="szazalek_jelölés"> %</string>
+</resources>
