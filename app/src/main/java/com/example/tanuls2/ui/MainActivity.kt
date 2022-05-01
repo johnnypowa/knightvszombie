@@ -1,10 +1,8 @@
 package com.example.tanuls2.ui
 
-import android.annotation.SuppressLint
-import android.content.DialogInterface
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.tanuls2.R
 import com.example.tanuls2.model.Character
@@ -17,52 +15,109 @@ class MainActivity : AppCompatActivity() {
 
     val myKnight = Knight()
     val enemyZombie = Zombie()
+    var defeatAlertdialog: AlertDialog? = null
+    var victoryAlertdialog: AlertDialog? = null
     //val strongZombie = Zombie(health = 2000)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        setupHealthBar()
+        createDefeatPopup()
+        createVictoryPopup()
+        printKnightParameter(myKnight)
+        printZombieParameter(enemyZombie)
+
+        knightHitId.setOnClickListener {
+            if (myKnight.currentHealth > 0 || enemyZombie.currentHealth > 0) {
+                hitWith(myKnight)
+                hitWith(enemyZombie)
+                setupHealthBar()
+            }
+        }
+
+        knightSkill1Id.setOnClickListener {
+            clearZombieHitResults()
+            hitWith(myKnight, extraDamage = 100)
+            printKnightParameter(myKnight)
+            printZombieParameter(enemyZombie)
+            knightSkill1Id.isEnabled = false
+            setupHealthBar()
+        }
+
+        knightSkill2Id.setOnClickListener {
+            clearZombieHitResults()
+            skillExtraCriticalHitChance()
+            setupHealthBar()
+        }
+
+        knightSkill3Id.setOnClickListener {
+            clearZombieHitResults()
+            skillEliminateBlockChance()
+            setupHealthBar()
+        }
+
+        knightSkill4Id.setOnClickListener {
+            clearZombieHitResults()
+            skillBloodSiphon()
+            setupHealthBar()
+        }
+    }
 
     fun printKnightParameter(knight: Knight) {
         knightLevelValue.text = knight.level.toString()
-        knightHealthValue.text = knight.health.toString()
+        knightHealthValue.text = knight.currentHealth.toString()
         knightExperienceValue.text = knight.experience.toString()
         knightDamageValue.text = knight.damage.toString()
-        knightCriticalHitChanceValue.text = (knight.criticalHitChance*100).toString()+getString(R.string.szazalek_jelölés)
-        knightBlockChanceValue.text = (knight.blockChance*100).toString()+getString(R.string.szazalek_jelölés)
+        knightCriticalHitChanceValue.text =
+            getString(R.string.percentage_value, (knight.criticalHitChance * 100).toInt())
+        knightBlockChanceValue.text =
+            getString(R.string.percentage_value, (knight.blockChance * 100).toInt())
     }
 
 
     fun printZombieParameter(zombie: Zombie) {
         enemyLevelValue.text = zombie.level.toString()
-        enemyHealthValue.text = zombie.health.toString()
+        enemyHealthValue.text = zombie.currentHealth.toString()
         enemyExperienceValue.text = zombie.experience.toString()
         enemyDamageValue.text = zombie.damage.toString()
-        enemyCriticalHitChanceValue.text = (zombie.criticalHitChance*100).toString()+getString(R.string.szazalek_jelölés)
-        enemyBlockChanceValue.text = (zombie.blockChance*100).toString()+getString(R.string.szazalek_jelölés)
+        enemyCriticalHitChanceValue.text =
+            getString(R.string.percentage_value, (zombie.criticalHitChance * 100).toInt())
+        enemyBlockChanceValue.text =
+            getString(R.string.percentage_value, (zombie.blockChance * 100).toInt())
+
     }
 
-    fun showVictoryPopup() {
-        AlertDialog.Builder(this)
+    fun createVictoryPopup() {
+        victoryAlertdialog=AlertDialog.Builder(this)
             .setMessage("Megölted a ellenfeled, gratulálok! Szépp munka!")
             .setTitle("Győzelem!")
+
             .setPositiveButton("Király! Kérem a következőt!") { dialog, p1 ->
+                knightHitId.isEnabled = false
                 dialog.dismiss()
+                setUpVictoryStart()
+                knightHitId.isEnabled = true
             }
             .setCancelable(false)
             .create()
-            .show()
+
 
         //Toast.makeText(this,"ez egy szöveg", Toast.LENGTH_LONG).show()
     }
 
-    fun showDefeatPopup() {
-        AlertDialog.Builder(this)
+
+    fun createDefeatPopup() {
+        defeatAlertdialog = AlertDialog.Builder(this)
             .setMessage("Gratulálok meghaltál!")
             .setTitle("Lúzer!")
             .setPositiveButton("Persze, megpróbálom újra.") { dialog, p1 ->
                 dialog.dismiss()
+                setUpDefeatStart()
             }
             .setCancelable(false)
             .create()
-            .show()
-
         //Toast.makeText(this,"ez egy szöveg", Toast.LENGTH_LONG).show()
     }
 
@@ -73,44 +128,47 @@ class MainActivity : AppCompatActivity() {
         knightSkill4Id.isEnabled = true
     }
 
-    //fun printParameters() {
-    //    knightParameterId.text =
-    //       "Lovag\nSzint: " + myKnight.level.toString() + "\nÉlet: " + myKnight.health.toString() + "\nTapasztalat: " + myKnight.experience.toString() + "\nSebzés: " + myKnight.damage.toString() + "\nKritikus ütés: " + myKnight.criticalHitChance.toString() + "\nBlokkolás: " + myKnight.blockChance.toString()
-    //   zombieParameterId.text =
-    //       "Zombi\nSzint: " + enemyZombie.level.toString() + "\nÉlet: " + enemyZombie.health.toString() + "\nTapasztalat: " + enemyZombie.experience.toString() + "\nSebzés: " + enemyZombie.damage.toString() + "\nKritikus ütés: " + enemyZombie.criticalHitChance.toString() + "\nBlokkolás: " + enemyZombie.blockChance.toString()
-    //}
+    fun setUpVictoryStart() {
+        enemyZombie.currentHealth = enemyZombie.maxHealth
+        myKnight.currentHealth = myKnight.maxHealth
+        myKnight.experience += 50
+        clearZombieHitResults()
+        clearKnightHitResults()
+        knightHitResultId.text = getString(R.string.start_fight)
+        printKnightParameter(myKnight)
+        printZombieParameter(enemyZombie)
+        skillsEnable()
+        setupHealthBar()
+    }
+
+    fun setUpDefeatStart() {
+        enemyZombie.currentHealth = enemyZombie.maxHealth
+        myKnight.currentHealth = myKnight.maxHealth
+        myKnight.experience -= 50
+        clearZombieHitResults()
+        clearKnightHitResults()
+        knightHitResultId.text = getString(R.string.start_fight)
+        printKnightParameter(myKnight)
+        printZombieParameter(enemyZombie)
+        skillsEnable()
+        setupHealthBar()
+    }
 
     fun checkHealthStatus(character: Character) {
+
         when (character) {
             is Knight -> {
-
-                if (myKnight.health < 1) {
-                    enemyZombie.health = 1000
-                    myKnight.health = 100
-                    myKnight.experience -= 50
-                    clearZombieHitResults()
-                    clearKnightHitResults()
-                    knightHitResultId.text = getString(R.string.start_fight)
-                    printKnightParameter(myKnight)
-                    printZombieParameter(enemyZombie)
-                    showDefeatPopup()
-                    skillsEnable()
+                if (myKnight.currentHealth <= 0) {
+                    if (defeatAlertdialog?.isShowing == false) {
+                        defeatAlertdialog?.show()
+                    }
                 }
-
             }
             is Zombie -> {
-
-                if (enemyZombie.health < 1) {
-                    enemyZombie.health = 1000
-                    myKnight.health = 100
-                    myKnight.experience += 50
-                    clearZombieHitResults()
-                    clearKnightHitResults()
-                    knightHitResultId.text = getString(R.string.start_fight)
-                    printKnightParameter(myKnight)
-                    printZombieParameter(enemyZombie)
-                    showVictoryPopup()
-                    skillsEnable()
+                if (victoryAlertdialog?.isShowing == false) {
+                    if (enemyZombie.currentHealth <= 0) {
+                        victoryAlertdialog?.show()
+                    }
                 }
 
             }
@@ -122,10 +180,17 @@ class MainActivity : AppCompatActivity() {
         return randomValue / 100f
     }
 
-    //fun healthBar (){
-      //  val knightMaxHealth  = Knight.health
+    fun setupHealthBar() {
+        knightHealthBar.apply {
+            max = myKnight.maxHealth
+            progress = myKnight.currentHealth
+        }
+        zombieHealthBar.apply {
+            max = enemyZombie.maxHealth
+            progress = enemyZombie.currentHealth
+        }
 
-    //}
+    }
 
     fun criticalHit(character: Character): Boolean? {
         return when (character) {
@@ -140,13 +205,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-    //fun knightCriticalHit(): Boolean {
-    //    return randomValueGenerator() <= myKnight.criticalHitChance
-    //}
-    //fun zombieCriticalHit(): Boolean {
-    //   return randomValueGenerator() <= enemyZombie.criticalHitChance
-    //}
 
     fun blockChance(character: Character): Boolean? {
         return when (character) {
@@ -183,30 +241,33 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun skillBloodSiphon() {
-        val actualHealthOfEnemy = enemyZombie.health
+        val actualHealthOfEnemy = enemyZombie.currentHealth
         hitWith(myKnight)
-        myKnight.health += (actualHealthOfEnemy - enemyZombie.health)
+        val modifiedHealth =
+            myKnight.currentHealth + (actualHealthOfEnemy - enemyZombie.currentHealth)
+        myKnight.currentHealth = when (modifiedHealth >= myKnight.maxHealth) {
+            true -> {
+                myKnight.maxHealth
+            }
+            else -> {
+                modifiedHealth
+            }
+
+        }
         printKnightParameter(myKnight)
         printZombieParameter(enemyZombie)
         knightSkill4Id.isEnabled = false
     }
 
-    //fun knightBlockChance(): Boolean {
-    //   return randomValueGenerator() <= myKnight.blockChance
-    //}
-    //fun zombieBlockChance(): Boolean {
-    //   return randomValueGenerator() <= enemyZombie.blockChance
-    //}
-
     fun clearKnightHitResults() {
         knightHitResultId.text = ""
-        knightDefenseResultId.text = ""
+        zombieDefenseResultId.text = ""
         knightCriticalHitResultId.text = ""
     }
 
     fun clearZombieHitResults() {
         zombieHitResultId.text = ""
-        zombieDefenseResultId.text = ""
+        knightDefenseResultId.text = ""
         zombieCriticalHitResultId.text = ""
     }
 
@@ -216,16 +277,17 @@ class MainActivity : AppCompatActivity() {
                 clearKnightHitResults()
                 if (blockChance(enemyZombie) == true) {
                     zombieDefenseResultId.text = getString(R.string.successfull_block)
+                    knightHitResultId.text = getString(R.string.notsuccessfull_hit)
                 } else {
                     if (criticalHit(myKnight) == true) {
                         //enemyZombie.health = enemyZombie.health - myKnight.damage * 2
-                        enemyZombie.health -= myKnight.damage * 2 + extraDamage
+                        enemyZombie.currentHealth -= myKnight.damage * 2 + extraDamage
                         knightHitResultId.text =
                             getString(R.string.successfull_hit)
                         knightCriticalHitResultId.text =
                             getString(R.string.critical_hit)
                     } else {
-                        enemyZombie.health -= myKnight.damage + extraDamage
+                        enemyZombie.currentHealth -= myKnight.damage + extraDamage
                         knightHitResultId.text = getString(R.string.successfull_hit)
                     }
                 }
@@ -234,15 +296,16 @@ class MainActivity : AppCompatActivity() {
                 clearZombieHitResults()
                 if (blockChance(myKnight) == true) {
                     knightDefenseResultId.text = getString(R.string.successfull_block)
+                    zombieHitResultId.text = getString(R.string.notsuccessfull_hit)
                 } else {
                     if (criticalHit(enemyZombie) == true) {
-                        myKnight.health -= enemyZombie.damage * 2
+                        myKnight.currentHealth -= enemyZombie.damage * 2
                         zombieHitResultId.text =
                             getString(R.string.successfull_hit)
                         zombieCriticalHitResultId.text =
                             getString(R.string.critical_hit)
                     } else {
-                        myKnight.health -= enemyZombie.damage
+                        myKnight.currentHealth -= enemyZombie.damage
                         zombieHitResultId.text = getString(R.string.successfull_hit)
                     }
                 }
@@ -251,77 +314,8 @@ class MainActivity : AppCompatActivity() {
         }
         printZombieParameter(enemyZombie)
         printKnightParameter(myKnight)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        printKnightParameter(myKnight)
-        printZombieParameter(enemyZombie)
-
-        knightHitId.setOnClickListener {
-            hitWith(myKnight)
-            hitWith(enemyZombie)
-            checkHealthStatus(enemyZombie)
-            checkHealthStatus(myKnight)
-        }
-
-        knightSkill1Id.setOnClickListener {
-            hitWith(myKnight, extraDamage = 100)
-            printKnightParameter(myKnight)
-            printZombieParameter(enemyZombie)
-            knightSkill1Id.isEnabled = false
-        }
-
-        knightSkill2Id.setOnClickListener {
-            skillExtraCriticalHitChance()
-        }
-
-        knightSkill3Id.setOnClickListener {
-            skillEliminateBlockChance()
-        }
-
-        knightSkill4Id.setOnClickListener {
-            skillBloodSiphon()
-        }
-
-        //val knightHitChance = randomValueGenerator()
-        //val zombieHitChance = randomValueGenerator()
-
-        //if (knightHitChance< myKnight.hitRate) {
-
-        // knightFightResultId.text = "Lovag találati ráta: $knightHitChance\n"+getString(R.string.successfull_hit)+"\n-" + myKnight.damage + " sebzés"
-        //enemyZombie.health = enemyZombie.health-myKnight.damage
-        //printParameters()
-        //} else {
-
-        // if (zombieHitChance < enemyZombie.hitRate) {
-        //     knightFightResultId.text = "Lovag találati ráta: $knightHitChance\n" + getString(R.string.notsuccessfull_hit)
-        //   zombieFightResultId.text = "Zombi találati ráta: $zombieHitChance\n" + getString(R.string.successfull_hit)+"\n-" + enemyZombie.damage + " sebzés"
-        //    myKnight.health = myKnight.health - enemyZombie.damage
-        //     printParameters()
-        // } else {
-        //     knightFightResultId.text = "Találati ráta: $knightHitChance\n" + getString(R.string.notsuccessfull_hit)
-        //    zombieFightResultId.text = "Zombi találati ráta: $zombieHitChance\n" + getString(R.string.notsuccessfull_hit)
-        //    printParameters()
-        // }
-        //}
-
-        // if (enemyZombie.health < 1 ){
-        //    enemyZombie.health = 100
-        //    myKnight.health = 100
-        //     myKnight.experience = myKnight.experience+50
-        //    knightFightResultId.text = ""
-        //    zombieFightResultId.text = getString(R.string.start_fight)
-
-        //    printParameters()
-
-        // }else{
-
-        // }
-
-
+        checkHealthStatus(enemyZombie)
+        checkHealthStatus(myKnight)
     }
 }
 

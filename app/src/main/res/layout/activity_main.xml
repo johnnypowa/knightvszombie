@@ -108,22 +108,18 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background_white"
+                            android:padding="@dimen/gap_4"
                             android:orientation="horizontal"
-                            android:backgroundTintMode="multiply"
                             >
 
-                            <TextView
-                                android:id="@+id/knightHealthLabel1"
+                            <com.google.android.material.progressindicator.LinearProgressIndicator
+                                android:id="@+id/knightHealthBar"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="20"
-                                 />
-
-                            <TextView
-                                android:id="@+id/knightHealthLabel2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="80"
+                                app:trackThickness="@dimen/gap_16"
+                                app:indicatorColor="@android:color/holo_red_light"
+                                app:trackCornerRadius="@dimen/gap_4"
                                 />
 
                         </LinearLayout>
@@ -309,6 +305,25 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background_white"
+                            android:padding="@dimen/gap_4"
+                            android:orientation="horizontal"
+                            >
+
+                            <com.google.android.material.progressindicator.LinearProgressIndicator
+                                android:id="@+id/zombieHealthBar"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:trackThickness="@dimen/gap_16"
+                                app:indicatorColor="@android:color/holo_red_light"
+                                app:trackCornerRadius="@dimen/gap_4"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             >
 
@@ -329,6 +344,8 @@
                                 android:textSize="@dimen/text_14" />
 
                         </LinearLayout>
+
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -582,15 +599,17 @@
 
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <TextView
             android:id="@+id/knightHitId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/gap_8"
+            android:padding="@dimen/gap_12"
             android:text="@string/knight_hit"
             android:background="@android:color/holo_red_light"
             android:textColor="@color/white"
             android:textStyle="bold"
+
             />
 
     </LinearLayout>
