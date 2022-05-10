@@ -26,5 +26,6 @@
     <string name="skill_bar">Képességek</string>
 
     <string name="percentage_value">%1$d%%</string>
+    <string name="empty_slot">Üres hely</string>
 
 </resources>
