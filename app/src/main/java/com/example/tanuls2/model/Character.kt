@@ -6,5 +6,7 @@ open class Character (var experience:Int,
                       var level:Int,
                       var damage:Int,
                       var criticalHitChance: Float,
-                      var blockChance: Float){
+                      var blockChance: Float,
+                      var items: ArrayList<Item> = arrayListOf()) {
+
 }
