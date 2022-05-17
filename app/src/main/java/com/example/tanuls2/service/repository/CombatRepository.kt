@@ -2,21 +2,20 @@ package com.example.tanuls2.service.repository
 
 import com.example.tanuls2.model.Knight
 import com.example.tanuls2.model.Zombie
-import com.example.tanuls2.service.datasource.LocalCombatDataSource
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import com.example.tanuls2.service.datasource.CombatLocalDataSource
+import io.reactivex.rxjava3.core.Single
 
-class CombatRepository(val localCombatDataSource: LocalCombatDataSource) {
+class CombatRepository(val combatLocalDataSource: CombatLocalDataSource) {
 
     //class CombatRepository(val localCombatDataSource: LocalCombatDataSource) : KoinComponent {
 
         //val localCombatDataSource: LocalCombatDataSource by inject()
 
-    fun fetchKnightData() : Knight {
-        return localCombatDataSource.fetchLocalKnightData()
+    fun fetchKnightData() : Single<Knight> {
+        return combatLocalDataSource.fetchLocalKnightData()
     }
 
     fun fetchZombieData() : Zombie {
-        return localCombatDataSource.fetchLocalZombieData()
+        return combatLocalDataSource.fetchLocalZombieData()
     }
 }

@@ -3,12 +3,15 @@ package com.example.tanuls2.service.datasource
 import com.example.tanuls2.handler.SharedPreferencesHandler
 import com.example.tanuls2.model.Knight
 import com.example.tanuls2.model.Zombie
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 
-class LocalCombatDataSource() {
+class CombatLocalDataSource() {
 
-    fun fetchLocalKnightData() : Knight {
+    fun fetchLocalKnightData() : Single<Knight> {
         SharedPreferencesHandler.storedKnight = SharedPreferencesHandler.storedKnight ?: Knight()
-        return SharedPreferencesHandler.storedKnight!!
+        return Single.fromCallable { SharedPreferencesHandler.storedKnight!! }
+            .subscribeOn(Schedulers.io())
     }
 
     fun fetchLocalZombieData() : Zombie {

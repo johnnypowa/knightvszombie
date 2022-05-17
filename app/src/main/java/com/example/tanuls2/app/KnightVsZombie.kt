@@ -3,6 +3,7 @@ package com.example.tanuls2.app
 import android.app.Application
 import android.content.Context
 import com.example.tanuls2.handler.SharedPreferencesHandler
+import com.example.tanuls2.service.datasource.InventoryLocalDataSource
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 

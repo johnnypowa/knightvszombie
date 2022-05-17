@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.tanuls2.R
@@ -12,6 +13,10 @@ import com.example.tanuls2.model.Character
 import com.example.tanuls2.model.Knight
 import com.example.tanuls2.model.Zombie
 import com.example.tanuls2.ui.viewmodel.CombatViewModel
+import com.example.tanuls2.ui.viewmodel.ShowError
+import com.example.tanuls2.ui.viewmodel.ShowKnightData
+import com.example.tanuls2.util.SingleEvent
+import com.example.tanuls2.util.observe
 import kotlinx.android.synthetic.main.fragment_combat.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -25,6 +30,14 @@ class CombatFragment : Fragment() {
 
     val combatViewModel: CombatViewModel by viewModel()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        observe(combatViewModel.onceLiveEvent) {
+            onEvent(it)
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_combat, container, false)
     }
@@ -32,13 +45,13 @@ class CombatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        myKnight = combatViewModel.loadMyKnightData()
+        combatViewModel.loadMyKnightData()
         enemyZombie = combatViewModel.loadEnemyZombieData()
 
-        setupHealthBar()
+        //setupHealthBar()
         createDefeatPopup()
         createVictoryPopup()
-        printKnightParameter(myKnight)
+        //printKnightParameter(myKnight)
         printZombieParameter(enemyZombie)
 
         knightHitId.setOnClickListener {
@@ -76,6 +89,30 @@ class CombatFragment : Fragment() {
             setupHealthBar()
         }
     }
+
+    fun onEvent(event: SingleEvent?) {
+        when(event) {
+            is ShowKnightData -> { showKnightContent(event.knightData) }
+            is ShowError -> { showErrorMessage(event.errorMessage) }
+        }
+    }
+
+    fun showErrorMessage(message: String?) {
+        Toast.makeText(requireContext(), message ?: "Hiba történt.", Toast.LENGTH_SHORT).show()
+    }
+
+    fun showKnightContent(knightData: Knight) {
+        myKnight = knightData
+
+        knightHealthBar.apply {
+            max = myKnight.maxHealth
+            progress = myKnight.currentHealth
+        }
+
+        printKnightParameter(myKnight)
+
+    }
+
     fun printKnightParameter(knight: Knight) {
         knightLevelValue.text = knight.level.toString()
         knightHealthValue.text = knight.currentHealth.toString()
