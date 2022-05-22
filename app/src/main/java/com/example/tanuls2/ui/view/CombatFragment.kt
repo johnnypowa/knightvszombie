@@ -13,6 +13,7 @@ import com.example.tanuls2.model.Character
 import com.example.tanuls2.model.Knight
 import com.example.tanuls2.model.Zombie
 import com.example.tanuls2.ui.viewmodel.CombatViewModel
+import com.example.tanuls2.ui.viewmodel.ShowEnemyZombieData
 import com.example.tanuls2.ui.viewmodel.ShowError
 import com.example.tanuls2.ui.viewmodel.ShowKnightData
 import com.example.tanuls2.util.SingleEvent
@@ -34,11 +35,15 @@ class CombatFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         observe(combatViewModel.onceLiveEvent) {
-            onEvent(it)
+            dataEvent(it)
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_combat, container, false)
     }
 
@@ -46,56 +51,49 @@ class CombatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         combatViewModel.loadMyKnightData()
-        enemyZombie = combatViewModel.loadEnemyZombieData()
-
-        //setupHealthBar()
+        combatViewModel.loadEnemyZombieData()
+        //enemyZombie = combatViewModel.loadEnemyZombieData()
         createDefeatPopup()
         createVictoryPopup()
-        //printKnightParameter(myKnight)
-        printZombieParameter(enemyZombie)
 
         knightHitId.setOnClickListener {
             if (myKnight.currentHealth > 0 || enemyZombie.currentHealth > 0) {
                 hitWith(myKnight)
                 hitWith(enemyZombie)
-                setupHealthBar()
             }
         }
 
         knightSkill1Id.setOnClickListener {
-            clearZombieHitResults()
-            hitWith(myKnight, extraDamage = 100)
-            printKnightParameter(myKnight)
-            printZombieParameter(enemyZombie)
-            knightSkill1Id.isEnabled = false
-            setupHealthBar()
+            skillExtraDamage()
         }
 
         knightSkill2Id.setOnClickListener {
-            clearZombieHitResults()
             skillExtraCriticalHitChance()
-            setupHealthBar()
         }
 
         knightSkill3Id.setOnClickListener {
-            clearZombieHitResults()
             skillEliminateBlockChance()
-            setupHealthBar()
         }
 
         knightSkill4Id.setOnClickListener {
-            clearZombieHitResults()
             skillBloodSiphon()
-            setupHealthBar()
         }
     }
 
-    fun onEvent(event: SingleEvent?) {
-        when(event) {
-            is ShowKnightData -> { showKnightContent(event.knightData) }
-            is ShowError -> { showErrorMessage(event.errorMessage) }
+    fun dataEvent(event: SingleEvent?) {
+        when (event) {
+            is ShowKnightData -> {
+                showKnightContent(event.knightData)
+            }
+            is ShowEnemyZombieData -> {
+                showEnemyZombieContent(event.zombieData)
+            }
+            is ShowError -> {
+                showErrorMessage(event.errorMessage)
+            }
         }
     }
+
 
     fun showErrorMessage(message: String?) {
         Toast.makeText(requireContext(), message ?: "Hiba történt.", Toast.LENGTH_SHORT).show()
@@ -103,14 +101,26 @@ class CombatFragment : Fragment() {
 
     fun showKnightContent(knightData: Knight) {
         myKnight = knightData
-
-        knightHealthBar.apply {
-            max = myKnight.maxHealth
-            progress = myKnight.currentHealth
-        }
-
+        setupKnightHealthBar()
         printKnightParameter(myKnight)
+    }
 
+    fun showEnemyZombieContent(zombieData: Zombie) {
+        enemyZombie = zombieData
+        setupZombieHealthBar()
+        printZombieParameter(enemyZombie)
+    }
+
+    fun clearKnightHitResults() {
+        knightHitResultId.text = ""
+        zombieDefenseResultId.text = ""
+        knightCriticalHitResultId.text = ""
+    }
+
+    fun clearZombieHitResults() {
+        zombieHitResultId.text = ""
+        knightDefenseResultId.text = ""
+        zombieCriticalHitResultId.text = ""
     }
 
     fun printKnightParameter(knight: Knight) {
@@ -134,11 +144,10 @@ class CombatFragment : Fragment() {
             getString(R.string.percentage_value, (zombie.criticalHitChance * 100).toInt())
         enemyBlockChanceValue.text =
             getString(R.string.percentage_value, (zombie.blockChance * 100).toInt())
-
     }
 
     fun createVictoryPopup() {
-        victoryAlertdialog= AlertDialog.Builder(requireContext())
+        victoryAlertdialog = AlertDialog.Builder(requireContext())
             .setMessage("Megölted a ellenfeled, gratulálok! Szépp munka!")
             .setTitle("Győzelem!")
 
@@ -150,11 +159,8 @@ class CombatFragment : Fragment() {
             }
             .setCancelable(false)
             .create()
-
-
         //Toast.makeText(this,"ez egy szöveg", Toast.LENGTH_LONG).show()
     }
-
 
     fun createDefeatPopup() {
         defeatAlertdialog = AlertDialog.Builder(requireContext())
@@ -169,13 +175,6 @@ class CombatFragment : Fragment() {
         //Toast.makeText(this,"ez egy szöveg", Toast.LENGTH_LONG).show()
     }
 
-    fun skillsEnable() {
-        knightSkill1Id.isEnabled = true
-        knightSkill2Id.isEnabled = true
-        knightSkill3Id.isEnabled = true
-        knightSkill4Id.isEnabled = true
-    }
-
     fun setUpVictoryStart() {
         enemyZombie.currentHealth = enemyZombie.maxHealth
         myKnight.currentHealth = myKnight.maxHealth
@@ -187,7 +186,8 @@ class CombatFragment : Fragment() {
         printKnightParameter(myKnight)
         printZombieParameter(enemyZombie)
         skillsEnable()
-        setupHealthBar()
+        setupKnightHealthBar()
+        setupZombieHealthBar()
     }
 
     fun setUpDefeatStart() {
@@ -200,7 +200,8 @@ class CombatFragment : Fragment() {
         printKnightParameter(myKnight)
         printZombieParameter(enemyZombie)
         skillsEnable()
-        setupHealthBar()
+        setupKnightHealthBar()
+        setupZombieHealthBar()
     }
 
     fun checkHealthStatus(character: Character) {
@@ -229,16 +230,18 @@ class CombatFragment : Fragment() {
         return randomValue / 100f
     }
 
-    fun setupHealthBar() {
+    fun setupKnightHealthBar() {
         knightHealthBar.apply {
             max = myKnight.maxHealth
             progress = myKnight.currentHealth
         }
+    }
+
+    fun setupZombieHealthBar() {
         zombieHealthBar.apply {
             max = enemyZombie.maxHealth
             progress = enemyZombie.currentHealth
         }
-
     }
 
     fun criticalHit(character: Character): Boolean? {
@@ -269,27 +272,54 @@ class CombatFragment : Fragment() {
         }
     }
 
+    fun skillsEnable() {
+        knightSkill1Id.isEnabled = true
+        knightSkill2Id.isEnabled = true
+        knightSkill3Id.isEnabled = true
+        knightSkill4Id.isEnabled = true
+    }
+
+    fun skillExtraDamage() {
+        clearZombieHitResults()
+        hitWith(myKnight, extraDamage = 100)
+
+        knightSkill1Id.isEnabled = false
+        printKnightParameter(myKnight)
+        printZombieParameter(enemyZombie)
+        setupKnightHealthBar()
+        setupZombieHealthBar()
+    }
+
     fun skillExtraCriticalHitChance() {
+        clearZombieHitResults()
         val originalCriticalHitChance = myKnight.criticalHitChance
         myKnight.criticalHitChance += (1.0f - originalCriticalHitChance)
         hitWith(myKnight)
         myKnight.criticalHitChance = originalCriticalHitChance
+
+        knightSkill2Id.isEnabled = false
         printKnightParameter(myKnight)
         printZombieParameter(enemyZombie)
-        knightSkill2Id.isEnabled = false
+        setupKnightHealthBar()
+        setupZombieHealthBar()
     }
 
     fun skillEliminateBlockChance() {
+        clearZombieHitResults()
         val originalBlockChance = enemyZombie.blockChance
         enemyZombie.blockChance = 0.0f
         hitWith(myKnight)
         enemyZombie.blockChance = originalBlockChance
+
+        knightSkill3Id.isEnabled = false
         printKnightParameter(myKnight)
         printZombieParameter(enemyZombie)
-        knightSkill3Id.isEnabled = false
+        setupKnightHealthBar()
+        setupZombieHealthBar()
     }
 
     fun skillBloodSiphon() {
+        clearZombieHitResults()
         val actualHealthOfEnemy = enemyZombie.currentHealth
         hitWith(myKnight)
         val modifiedHealth =
@@ -301,24 +331,14 @@ class CombatFragment : Fragment() {
             else -> {
                 modifiedHealth
             }
-
         }
+        knightSkill4Id.isEnabled = false
         printKnightParameter(myKnight)
         printZombieParameter(enemyZombie)
-        knightSkill4Id.isEnabled = false
+        setupKnightHealthBar()
+        setupZombieHealthBar()
     }
 
-    fun clearKnightHitResults() {
-        knightHitResultId.text = ""
-        zombieDefenseResultId.text = ""
-        knightCriticalHitResultId.text = ""
-    }
-
-    fun clearZombieHitResults() {
-        zombieHitResultId.text = ""
-        knightDefenseResultId.text = ""
-        zombieCriticalHitResultId.text = ""
-    }
 
     fun hitWith(character: Character, extraDamage: Int = 0) {
         when (character) {
@@ -363,6 +383,8 @@ class CombatFragment : Fragment() {
         }
         printZombieParameter(enemyZombie)
         printKnightParameter(myKnight)
+        setupKnightHealthBar()
+        setupZombieHealthBar()
         checkHealthStatus(enemyZombie)
         checkHealthStatus(myKnight)
     }

@@ -14,8 +14,10 @@ class CombatLocalDataSource() {
             .subscribeOn(Schedulers.io())
     }
 
-    fun fetchLocalZombieData() : Zombie {
+    fun fetchLocalZombieData() : Single<Zombie> {
         SharedPreferencesHandler.storedZombie = SharedPreferencesHandler.storedZombie ?: Zombie()
-        return SharedPreferencesHandler.storedZombie!!
+        return Single.fromCallable { SharedPreferencesHandler.storedZombie!! }
+            .subscribeOn(Schedulers.io())
+        //return SharedPreferencesHandler.storedZombie!!
     }
 }

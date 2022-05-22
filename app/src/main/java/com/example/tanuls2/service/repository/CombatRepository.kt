@@ -8,14 +8,13 @@ import io.reactivex.rxjava3.core.Single
 class CombatRepository(val combatLocalDataSource: CombatLocalDataSource) {
 
     //class CombatRepository(val localCombatDataSource: LocalCombatDataSource) : KoinComponent {
-
         //val localCombatDataSource: LocalCombatDataSource by inject()
 
     fun fetchKnightData() : Single<Knight> {
         return combatLocalDataSource.fetchLocalKnightData()
     }
 
-    fun fetchZombieData() : Zombie {
+    fun fetchZombieData() : Single<Zombie>{
         return combatLocalDataSource.fetchLocalZombieData()
     }
 }
