@@ -12,10 +12,7 @@ import com.example.tanuls2.handler.SharedPreferencesHandler
 import com.example.tanuls2.model.Character
 import com.example.tanuls2.model.Knight
 import com.example.tanuls2.model.Zombie
-import com.example.tanuls2.ui.viewmodel.CombatViewModel
-import com.example.tanuls2.ui.viewmodel.ShowEnemyZombieData
-import com.example.tanuls2.ui.viewmodel.ShowError
-import com.example.tanuls2.ui.viewmodel.ShowKnightData
+import com.example.tanuls2.ui.viewmodel.*
 import com.example.tanuls2.util.SingleEvent
 import com.example.tanuls2.util.observe
 import kotlinx.android.synthetic.main.fragment_combat.*
@@ -50,8 +47,8 @@ class CombatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        combatViewModel.loadMyKnightData()
-        combatViewModel.loadEnemyZombieData()
+        combatViewModel.loadAllContent()
+        //combatViewModel.loadEnemyZombieData()
         //enemyZombie = combatViewModel.loadEnemyZombieData()
         createDefeatPopup()
         createVictoryPopup()
@@ -82,21 +79,26 @@ class CombatFragment : Fragment() {
 
     fun dataEvent(event: SingleEvent?) {
         when (event) {
-            is ShowKnightData -> {
-                showKnightContent(event.knightData)
-            }
-            is ShowEnemyZombieData -> {
-                showEnemyZombieContent(event.zombieData)
+            is ShowAllContent -> {
+                showAllData(event.knightData, event.zombieData)
+                combatLoadingIndicatorId.visibility = View.GONE
+                combatContainerId.visibility = View.VISIBLE
             }
             is ShowError -> {
                 showErrorMessage(event.errorMessage)
             }
         }
+
     }
 
 
     fun showErrorMessage(message: String?) {
         Toast.makeText(requireContext(), message ?: "Hiba történt.", Toast.LENGTH_SHORT).show()
+    }
+
+    fun showAllData(knightData: Knight,zombieData: Zombie){
+        showKnightContent(knightData)
+        showEnemyZombieContent(zombieData)
     }
 
     fun showKnightContent(knightData: Knight) {
