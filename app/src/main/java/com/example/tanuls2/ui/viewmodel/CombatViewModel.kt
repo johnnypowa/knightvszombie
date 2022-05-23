@@ -43,37 +43,6 @@ class CombatViewModel(
             )
     }
 
-    fun loadMyKnightData() {
-        compositeDisposable += loadKnightDataUseCase.execute()
-            .delay(4L, TimeUnit.SECONDS)
-            .subscribeOn(AndroidSchedulers.mainThread())
-            .observeOn(Schedulers.io())
-            .subscribe(
-                {
-                    onceLiveEvent.postValue(ShowKnightData(it))
-                },
-                {
-                    onceLiveEvent.postValue(ShowError(it.message))
-                }
-            )
-    }
-
-    fun loadEnemyZombieData() {
-        compositeDisposable += loadZombieDataUseCase.execute()
-            .delay(1L, TimeUnit.SECONDS)
-            .subscribeOn(AndroidSchedulers.mainThread())
-            .observeOn(Schedulers.io())
-            .subscribe(
-                {
-                    onceLiveEvent.postValue(ShowEnemyZombieData(it))
-                },
-                {
-                    onceLiveEvent.postValue(ShowError(it.message))
-                }
-            )
-        //return loadZombieDataUseCase.execute()
-    }
-
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
@@ -81,6 +50,4 @@ class CombatViewModel(
 }
 
 class ShowAllContent(val knightData: Knight, val zombieData: Zombie) : SingleEvent
-class ShowKnightData(val knightData: Knight) : SingleEvent
-class ShowEnemyZombieData(val zombieData: Zombie) : SingleEvent
 class ShowError(val errorMessage: String?) : SingleEvent

@@ -1,6 +1,6 @@
 package com.example.tanuls2.model
 
-class Armor():Item(null,
+class Armor(name: String):Item(name,
                     1,
                     0,
                     0,

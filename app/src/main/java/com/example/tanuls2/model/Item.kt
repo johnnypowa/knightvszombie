@@ -8,5 +8,5 @@ open class Item(var itemName:String?,
                 var criticalHitChance: Float,
                 var blockChance: Float,
                 var lifeSteal:Float,
-                var price:Int){
+                var price:Int = 0){
 }

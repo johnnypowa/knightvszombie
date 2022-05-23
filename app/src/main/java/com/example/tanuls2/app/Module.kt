@@ -13,6 +13,7 @@ import com.example.tanuls2.service.datasource.InventoryLocalDataSource
 import com.example.tanuls2.service.datasource.SkillsLocalDataSource
 import com.example.tanuls2.service.repository.InventoryRepository
 import com.example.tanuls2.service.repository.SkillsRepository
+import com.example.tanuls2.ui.viewmodel.InventoryViewModel
 
 val dataSourceModule = module {
     single { CombatLocalDataSource() }
@@ -35,4 +36,5 @@ val useCaseModule = module {
 
 val viewModelModule = module {
     viewModel { CombatViewModel(get(), get()) }
+    viewModel { InventoryViewModel() }
 }
