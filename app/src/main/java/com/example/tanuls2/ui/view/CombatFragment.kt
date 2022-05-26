@@ -9,9 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.tanuls2.R
 import com.example.tanuls2.handler.SharedPreferencesHandler
-import com.example.tanuls2.model.Character
-import com.example.tanuls2.model.Knight
-import com.example.tanuls2.model.Zombie
+import com.example.tanuls2.model.*
 import com.example.tanuls2.ui.viewmodel.*
 import com.example.tanuls2.util.SingleEvent
 import com.example.tanuls2.util.observe
@@ -177,10 +175,32 @@ class CombatFragment : Fragment() {
         //Toast.makeText(this,"ez egy szöveg", Toast.LENGTH_LONG).show()
     }
 
+    fun putItemToInventory(){
+
+        val item = Weapon("BarbárKard",1, damage = 10, price = 2)
+
+        val firstEmptySlot = myKnight.itemList.firstOrNull { it.type == ItemType.EMPTY_SLOT }
+        if(firstEmptySlot != null) {
+            val indexOfEmptySlot = myKnight.itemList.indexOf(firstEmptySlot)
+            myKnight.itemList.removeAt(indexOfEmptySlot)
+            myKnight.itemList.add(indexOfEmptySlot, item)
+            SharedPreferencesHandler.storedItemList = myKnight.itemList
+
+            if (indexOfEmptySlot < 11) {
+                Toast.makeText(requireContext(), "Kaptál egy tárgyat: ${item.itemName}", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(requireContext(), "Kaptál egy tárgyat: ${item.itemName}. Tele a táskád!", Toast.LENGTH_LONG).show()
+            }
+        } else {
+            Toast.makeText(requireContext(), "Megtelt a táskád, nem tudtad felvenni a tárgyat!", Toast.LENGTH_LONG).show()
+        }
+    }
+
     fun setUpVictoryStart() {
         enemyZombie.currentHealth = enemyZombie.maxHealth
         myKnight.currentHealth = myKnight.maxHealth
         myKnight.experience += 50
+        putItemToInventory()
         SharedPreferencesHandler.storedKnight = myKnight
         clearZombieHitResults()
         clearKnightHitResults()

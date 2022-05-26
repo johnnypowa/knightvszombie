@@ -10,6 +10,7 @@ import com.example.tanuls2.ui.viewmodel.CombatViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import com.example.tanuls2.service.datasource.InventoryLocalDataSource
+import com.example.tanuls2.service.datasource.InventoryRemoteDataSource
 import com.example.tanuls2.service.datasource.SkillsLocalDataSource
 import com.example.tanuls2.service.repository.InventoryRepository
 import com.example.tanuls2.service.repository.SkillsRepository
@@ -19,11 +20,12 @@ val dataSourceModule = module {
     single { CombatLocalDataSource() }
     single { InventoryLocalDataSource() }
     single { SkillsLocalDataSource() }
+    single {InventoryRemoteDataSource()}
 }
 
 val repositoryModule = module {
     single { CombatRepository(get()) }
-    single { InventoryRepository(get()) }
+    single { InventoryRepository(get(),get()) }
     single { SkillsRepository(get()) }
 }
 

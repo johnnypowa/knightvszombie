@@ -1,9 +1,18 @@
 package com.example.tanuls2.model
 
-class Knight() : Character(0,
-                            100,
-                            100,
-                            1,
-                            100,
-                            0.2f,
-                            0.2f)
+import com.example.tanuls2.handler.SharedPreferencesHandler
+
+data class Knight(var itemList: ArrayList<Item> = ArrayList(12)) : Character(0,
+                                                            100,
+                                                            100,
+                                                            1,
+                                                            100,
+                                                            0.2f,
+                                                            0.2f) {
+    init {
+        for (i in 0..11) {
+            itemList.add(EmptySlot())
+        }
+        SharedPreferencesHandler.storedItemList = itemList
+    }
+}

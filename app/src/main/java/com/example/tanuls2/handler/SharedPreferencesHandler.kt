@@ -2,7 +2,9 @@ package com.example.tanuls2.handler
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.tanuls2.model.Item
 import com.example.tanuls2.model.Knight
+import com.example.tanuls2.model.Weapon
 import com.example.tanuls2.model.Zombie
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -24,6 +26,10 @@ object SharedPreferencesHandler {
     var storedZombie: Zombie?
         set(value) = preferences.edit().putString("enemyZombie", Gson().toJson(value)).apply()
         get() = Gson().fromJson(preferences.getString("enemyZombie", null), object: TypeToken<Zombie>(){}.type)
+
+    var storedItemList:ArrayList<Item>
+        set(value) = preferences.edit().putString("itemList", Gson().toJson(value)).apply()
+        get() = Gson().fromJson(preferences.getString("itemList", "[]"), object: TypeToken<ArrayList<Item>>(){}.type)
 
     //var isDefeated : Boolean
     // get() = preferences.getBoolean("isDefeated", false)
