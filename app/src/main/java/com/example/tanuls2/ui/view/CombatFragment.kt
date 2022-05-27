@@ -85,6 +85,9 @@ class CombatFragment : Fragment() {
             is ShowError -> {
                 showErrorMessage(event.errorMessage)
             }
+            is DroppedItem -> {
+                putItemToInventory(event.droppedItem)
+            }
         }
 
     }
@@ -175,9 +178,10 @@ class CombatFragment : Fragment() {
         //Toast.makeText(this,"ez egy szöveg", Toast.LENGTH_LONG).show()
     }
 
-    fun putItemToInventory(){
+    fun putItemToInventory(item: Item){
 
-        val item = Weapon("BarbárKard",1, damage = 10, price = 2)
+        //val item = Weapon("BarbárKard",1, damage = 10, price = 2)
+
 
         val firstEmptySlot = myKnight.itemList.firstOrNull { it.type == ItemType.EMPTY_SLOT }
         if(firstEmptySlot != null) {
@@ -200,7 +204,8 @@ class CombatFragment : Fragment() {
         enemyZombie.currentHealth = enemyZombie.maxHealth
         myKnight.currentHealth = myKnight.maxHealth
         myKnight.experience += 50
-        putItemToInventory()
+        //putItemToInventory()
+        combatViewModel.getDroppedItem()
         SharedPreferencesHandler.storedKnight = myKnight
         clearZombieHitResults()
         clearKnightHitResults()

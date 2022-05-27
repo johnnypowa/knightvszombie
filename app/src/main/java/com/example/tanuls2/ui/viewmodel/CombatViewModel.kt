@@ -1,9 +1,11 @@
 package com.example.tanuls2.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.example.tanuls2.domain.DroppedItemUseCase
 import com.example.tanuls2.domain.LoadKnightDataUseCase
 import com.example.tanuls2.domain.LoadZombieDataUseCase
 import com.example.tanuls2.model.CombatModel
+import com.example.tanuls2.model.Item
 import com.example.tanuls2.model.Knight
 import com.example.tanuls2.model.Zombie
 import com.example.tanuls2.util.OnceLiveEvent
@@ -18,7 +20,8 @@ import java.util.concurrent.TimeUnit
 //MVVM architektúra (Model - View - ViewModel)
 class CombatViewModel(
     private val loadKnightDataUseCase: LoadKnightDataUseCase,
-    private val loadZombieDataUseCase: LoadZombieDataUseCase
+    private val loadZombieDataUseCase: LoadZombieDataUseCase,
+    private val droppedItemUseCase: DroppedItemUseCase
 ) : ViewModel() {
 
     val onceLiveEvent = OnceLiveEvent<SingleEvent>() //Live data
@@ -43,6 +46,19 @@ class CombatViewModel(
             )
     }
 
+    fun getDroppedItem() {
+        compositeDisposable += droppedItemUseCase.execute()
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(Schedulers.io())
+            .subscribe(
+                {
+                    onceLiveEvent.postValue(DroppedItem(it))
+                },{
+
+                }
+            )
+    }
+
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
@@ -51,3 +67,4 @@ class CombatViewModel(
 
 class ShowAllContent(val knightData: Knight, val zombieData: Zombie) : SingleEvent
 class ShowError(val errorMessage: String?) : SingleEvent
+class DroppedItem(val droppedItem: Item) : SingleEvent

@@ -16,7 +16,7 @@ class KnightVsZombie : Application() {
 
         startKoin {
             androidContext(this@KnightVsZombie)
-            modules(listOf(dataSourceModule, repositoryModule, useCaseModule, viewModelModule))
+            modules(listOf(dataSourceModule, repositoryModule, useCaseModule, viewModelModule, retrofitModule, apiModule))
         }
 
         appContext = this
