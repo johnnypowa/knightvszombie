@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tanuls2.R
 import com.example.tanuls2.model.Item
+import com.example.tanuls2.model.ItemType
 import com.example.tanuls2.ui.viewmodel.InventoryViewModel
 import kotlinx.android.synthetic.main.cell_item.view.*
 
@@ -40,7 +41,13 @@ class InventoryAdapter(val inventoryViewModel: InventoryViewModel) : RecyclerVie
         fun bind(item: Item, position: Int) {
             currentItem = item
             itemView.cellNameId.text = itemList[position].itemName
-            itemView.cellPictureId.setImageResource(com.google.android.material.R.drawable.ic_clock_black_24dp)
+            when(currentItem.type){
+                ItemType.WEAPON -> { itemView.cellPictureId.setImageResource(R.drawable.ic_swords) }
+                ItemType.POTION -> { itemView.cellPictureId.setImageResource(R.drawable.ic_potion) }
+                ItemType.ARMOR -> { itemView.cellPictureId.setImageResource(R.drawable.ic_armor) }
+                ItemType.JEWELLERY -> { itemView.cellPictureId.setImageResource(R.drawable.ic_treasure) }
+                ItemType.EMPTY_SLOT -> { itemView.cellPictureId.setImageResource(R.drawable.ic_empty) }
+            }
         }
 
     }

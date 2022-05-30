@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginHorizontal="@dimen/gap_20"
     android:layout_marginVertical="@dimen/gap_20"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -27,7 +28,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
 
 
         <LinearLayout
@@ -45,18 +47,40 @@
                 android:layout_weight="50"
                 android:layout_marginEnd="@dimen/gap_4"
                 >
-
-                <TextView
-                    android:id="@+id/knightNameLabel"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_background"
-                    android:paddingHorizontal="@dimen/gap_8"
-                    android:text="@string/knight_name_label"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_16"
-                    android:textAlignment="center"
-                    />
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/knightImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        android:layout_marginTop="@dimen/gap_16"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/knightNameLabel"
+                        app:srcCompat="@drawable/ic_knight"/>
+
+                    <TextView
+                        android:id="@+id/knightNameLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="@dimen/gap_8"
+                        android:paddingHorizontal="@dimen/gap_16"
+                        android:text="@string/knight_name_label"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_16"
+                        android:textAlignment="center"
+                        android:layout_marginTop="@dimen/gap_4"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/knightImage"
+                        app:drawableEndCompat="@drawable/baseline_edit_24" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 <LinearLayout
@@ -244,17 +268,40 @@
                 android:layout_weight="50"
                 >
 
-                <TextView
-                    android:id="@+id/enemyNameLabel"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_background"
-                    android:paddingHorizontal="@dimen/gap_8"
-                    android:text="@string/enemy_name_label"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_16"
-                    android:textAlignment="center"
-                    />
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/zombieImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        android:layout_marginTop="@dimen/gap_16"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/enemyNameLabel"
+                        app:srcCompat="@drawable/ic_zombie"/>
+
+                    <TextView
+                        android:id="@+id/enemyNameLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="@dimen/gap_8"
+                        android:paddingHorizontal="@dimen/gap_16"
+                        android:text="@string/enemy_name_label"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_16"
+                        android:textAlignment="center"
+                        android:layout_marginTop="@dimen/gap_4"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/zombieImage"
+                        app:drawableEndCompat="@drawable/baseline_edit_24"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
