@@ -29,7 +29,7 @@ class CombatViewModel(
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     val knightDataFlow : Single<Knight> = loadKnightDataUseCase.execute().delay(1L, TimeUnit.SECONDS)
-    val zombieDataFlow: Single<Zombie> = loadZombieDataUseCase.execute().delay(2L, TimeUnit.SECONDS)
+    val zombieDataFlow: Single<Zombie> = loadZombieDataUseCase.execute().delay(1L, TimeUnit.SECONDS)
 
     fun loadAllContent() {
         compositeDisposable += Single.zip(knightDataFlow, zombieDataFlow) { knightData, zombieData ->
@@ -54,7 +54,7 @@ class CombatViewModel(
                 {
                     onceLiveEvent.postValue(DroppedItem(it))
                 },{
-
+                    onceLiveEvent.postValue(ShowError(it.message))
                 }
             )
     }

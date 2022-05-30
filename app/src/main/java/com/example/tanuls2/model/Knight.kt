@@ -10,9 +10,6 @@ data class Knight(var itemList: ArrayList<Item> = ArrayList(12)) : Character(0,
                                                             0.2f,
                                                             0.2f) {
     init {
-        for (i in 0..11) {
-            itemList.add(EmptySlot())
-        }
-        SharedPreferencesHandler.storedItemList = itemList
+
     }
 }

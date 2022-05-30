@@ -46,6 +46,8 @@ class CombatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         combatViewModel.loadAllContent()
+
+
         //combatViewModel.loadEnemyZombieData()
         //enemyZombie = combatViewModel.loadEnemyZombieData()
         createDefeatPopup()
@@ -92,6 +94,14 @@ class CombatFragment : Fragment() {
 
     }
 
+    fun inventoryFirstRunCheck(){
+        if (myKnight.itemList.size == 0) {
+            for (i in 0..11) {
+                myKnight.itemList.add(EmptySlot())
+            }
+            SharedPreferencesHandler.storedItemList = myKnight.itemList
+        }
+    }
 
     fun showErrorMessage(message: String?) {
         Toast.makeText(requireContext(), message ?: "Hiba történt.", Toast.LENGTH_SHORT).show()
@@ -104,6 +114,7 @@ class CombatFragment : Fragment() {
 
     fun showKnightContent(knightData: Knight) {
         myKnight = knightData
+        inventoryFirstRunCheck()
         setupKnightHealthBar()
         printKnightParameter(myKnight)
     }
@@ -180,15 +191,13 @@ class CombatFragment : Fragment() {
 
     fun putItemToInventory(item: Item){
 
-        //val item = Weapon("BarbárKard",1, damage = 10, price = 2)
-
-
         val firstEmptySlot = myKnight.itemList.firstOrNull { it.type == ItemType.EMPTY_SLOT }
         if(firstEmptySlot != null) {
             val indexOfEmptySlot = myKnight.itemList.indexOf(firstEmptySlot)
             myKnight.itemList.removeAt(indexOfEmptySlot)
             myKnight.itemList.add(indexOfEmptySlot, item)
             SharedPreferencesHandler.storedItemList = myKnight.itemList
+
 
             if (indexOfEmptySlot < 11) {
                 Toast.makeText(requireContext(), "Kaptál egy tárgyat: ${item.itemName}", Toast.LENGTH_LONG).show()
@@ -198,14 +207,6 @@ class CombatFragment : Fragment() {
         } else {
             Toast.makeText(requireContext(), "Megtelt a táskád, nem tudtad felvenni a tárgyat!", Toast.LENGTH_LONG).show()
         }
-    }
-
-    fun setUpVictoryStart() {
-        enemyZombie.currentHealth = enemyZombie.maxHealth
-        myKnight.currentHealth = myKnight.maxHealth
-        myKnight.experience += 50
-        //putItemToInventory()
-        combatViewModel.getDroppedItem()
         SharedPreferencesHandler.storedKnight = myKnight
         clearZombieHitResults()
         clearKnightHitResults()
@@ -215,6 +216,13 @@ class CombatFragment : Fragment() {
         skillsEnable()
         setupKnightHealthBar()
         setupZombieHealthBar()
+    }
+
+    fun setUpVictoryStart() {
+        enemyZombie.currentHealth = enemyZombie.maxHealth
+        myKnight.currentHealth = myKnight.maxHealth
+        myKnight.experience += 50
+        combatViewModel.getDroppedItem()
     }
 
     fun setUpDefeatStart() {

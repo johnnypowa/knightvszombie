@@ -8,12 +8,10 @@ import io.reactivex.rxjava3.core.Single
 class InventoryRepository(val inventoryLocalDatasource:InventoryLocalDataSource, val inventoryRemoteDataSource:InventoryRemoteDataSource) {
 
     fun fetchInventory() : Single<ArrayList<Item>> {
-        //Todo: kiszedem lokalbol az item listet és tovabb passzolom a show invenotry usecase-nek
-        return Single.just(arrayListOf<Item>())
+        return inventoryLocalDatasource.getItemListFromLocal()
     }
 
     fun generateItemFromRemote() : Single<Item> {
-        //TODO: itt fogom a remote card alapján legenerálni az item-et, majd továbbitom az uj item-et a combat fragment felé
         return inventoryRemoteDataSource.drawCard()
             .map {
                 val cardType = it.cardList[0].cardType
