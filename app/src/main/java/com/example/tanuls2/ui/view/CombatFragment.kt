@@ -210,7 +210,6 @@ class CombatFragment : Fragment() {
         SharedPreferencesHandler.storedKnight = myKnight
         clearZombieHitResults()
         clearKnightHitResults()
-        knightHitResultId.text = getString(R.string.start_fight)
         printKnightParameter(myKnight)
         printZombieParameter(enemyZombie)
         skillsEnable()

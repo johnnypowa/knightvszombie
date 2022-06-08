@@ -1,674 +1,689 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/combatContainerId"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginHorizontal="@dimen/gap_20"
     android:layout_marginVertical="@dimen/gap_20"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:visibility="gone"
+    tools:visibility="visible">
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/combatLoadingIndicatorId"
-        android:indeterminate="true"
-        android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/knightId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/gap_8"
+        android:background="@drawable/rounded_background_white"
+        android:padding="@dimen/gap_8"
+        app:layout_constraintBottom_toTopOf="@id/attackLabel"
+        app:layout_constraintEnd_toStartOf="@id/enemyId"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/knightImageAndName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/knightLevelLabel"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/knightImage"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_marginTop="@dimen/gap_16"
+                app:layout_constraintBottom_toTopOf="@id/knightNameLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_knight" />
+
+            <TextView
+                android:id="@+id/knightNameLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_4"
+                android:paddingHorizontal="@dimen/gap_16"
+                android:paddingVertical="@dimen/gap_8"
+                android:text="@string/knight_name_label"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_16"
+                app:drawableEndCompat="@drawable/baseline_edit_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/knightImage" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/knightLevelLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/level_label"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/knightHealthLabel"
+            app:layout_constraintEnd_toStartOf="@+id/knightLevelValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/knightImageAndName" />
+
+        <TextView
+            android:id="@+id/knightLevelValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/knightHealthValue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/knightLevelLabel"
+            app:layout_constraintTop_toBottomOf="@id/knightImageAndName" />
+
+        <TextView
+            android:id="@+id/knightHealthLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/health_label"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/knightHealthBarRoundedBackground"
+            app:layout_constraintEnd_toStartOf="@+id/knightHealthValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/knightLevelLabel" />
+
+        <TextView
+            android:id="@+id/knightHealthValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/knightHealthBarRoundedBackground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/knightHealthLabel"
+            app:layout_constraintTop_toBottomOf="@+id/knightLevelValue" />
+
+        <LinearLayout
+            android:id="@+id/knightHealthBarRoundedBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_background_white"
+            android:orientation="horizontal"
+            android:padding="@dimen/gap_4"
+            app:layout_constraintBottom_toTopOf="@+id/knightExperienceLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/knightHealthLabel">
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/knightHealthBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:indicatorColor="@android:color/holo_red_light"
+                app:trackCornerRadius="@dimen/gap_4"
+                app:trackThickness="@dimen/gap_16" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/knightExperienceLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/experience_label"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/knightDamageLabel"
+            app:layout_constraintEnd_toStartOf="@+id/knightExperienceValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/knightHealthBarRoundedBackground" />
+
+        <TextView
+            android:id="@+id/knightExperienceValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/knightDamageValue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/knightExperienceLabel"
+            app:layout_constraintTop_toBottomOf="@+id/knightHealthBarRoundedBackground" />
+
+        <TextView
+            android:id="@+id/knightDamageLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/damage_label"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/knightCriticalHitChanceLabel"
+            app:layout_constraintEnd_toStartOf="@+id/knightDamageValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/knightExperienceLabel" />
+
+        <TextView
+            android:id="@+id/knightDamageValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/knightCriticalHitChanceValue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/knightDamageLabel"
+            app:layout_constraintTop_toBottomOf="@+id/knightExperienceValue" />
+
+        <TextView
+            android:id="@+id/knightCriticalHitChanceLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/critical_hit_chance_label"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/knightBlockChanceLabel"
+            app:layout_constraintEnd_toStartOf="@+id/knightCriticalHitChanceValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/knightDamageLabel" />
+
+        <TextView
+            android:id="@+id/knightCriticalHitChanceValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/knightBlockChanceValue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/knightCriticalHitChanceLabel"
+            app:layout_constraintTop_toBottomOf="@+id/knightDamageValue" />
+
+        <TextView
+            android:id="@+id/knightBlockChanceLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/block_chance_label"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/knightBlockChanceValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/knightCriticalHitChanceLabel" />
+
+        <TextView
+            android:id="@+id/knightBlockChanceValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/knightBlockChanceLabel"
+            app:layout_constraintTop_toBottomOf="@+id/knightCriticalHitChanceValue" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/enemyId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_background_white"
+        android:orientation="vertical"
+        android:padding="@dimen/gap_8"
+        app:layout_constraintBottom_toTopOf="@id/attackLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/knightId"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/enemyImageAndName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/zombieImage"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_marginTop="@dimen/gap_16"
+                app:layout_constraintBottom_toTopOf="@id/enemyNameLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_zombie" />
+
+            <TextView
+                android:id="@+id/enemyNameLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_4"
+                android:paddingHorizontal="@dimen/gap_16"
+                android:paddingVertical="@dimen/gap_8"
+                android:text="@string/enemy_name_label"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_16"
+                app:drawableEndCompat="@drawable/baseline_edit_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/zombieImage" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/enemyLevelLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/level_label"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/enemyHealthLabel"
+            app:layout_constraintEnd_toStartOf="@+id/enemyLevelValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enemyImageAndName" />
+
+        <TextView
+            android:id="@+id/enemyLevelValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/enemyHealthValue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/enemyLevelLabel"
+            app:layout_constraintTop_toBottomOf="@id/enemyImageAndName" />
+
+        <TextView
+            android:id="@+id/enemyHealthLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/health_label"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/enemyHealthBarRoundedBackground"
+            app:layout_constraintEnd_toStartOf="@+id/enemyHealthValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enemyLevelLabel" />
+
+        <TextView
+            android:id="@+id/enemyHealthValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/enemyHealthBarRoundedBackground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/enemyHealthLabel"
+            app:layout_constraintTop_toBottomOf="@+id/enemyLevelValue" />
+
+        <LinearLayout
+            android:id="@+id/enemyHealthBarRoundedBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_background_white"
+            android:orientation="horizontal"
+            android:padding="@dimen/gap_4"
+            app:layout_constraintBottom_toTopOf="@+id/enemyExperienceLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enemyHealthLabel">
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/zombieHealthBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:indicatorColor="@android:color/holo_red_light"
+                app:trackCornerRadius="@dimen/gap_4"
+                app:trackThickness="@dimen/gap_16" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/enemyExperienceLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/experience_label"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/enemyDamageLabel"
+            app:layout_constraintEnd_toStartOf="@+id/enemyExperienceValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enemyHealthBarRoundedBackground" />
+
+        <TextView
+            android:id="@+id/enemyExperienceValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/enemyDamageValue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/enemyExperienceLabel"
+            app:layout_constraintTop_toBottomOf="@+id/enemyHealthBarRoundedBackground" />
+
+        <TextView
+            android:id="@+id/enemyDamageLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/damage_label"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/enemyCriticalHitChanceLabel"
+            app:layout_constraintEnd_toStartOf="@+id/enemyDamageValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enemyExperienceLabel" />
+
+        <TextView
+            android:id="@+id/enemyDamageValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/enemyCriticalHitChanceValue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/enemyDamageLabel"
+            app:layout_constraintTop_toBottomOf="@+id/enemyExperienceValue" />
+
+        <TextView
+            android:id="@+id/enemyCriticalHitChanceLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/critical_hit_chance_label"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/enemyBlockChanceLabel"
+            app:layout_constraintEnd_toStartOf="@+id/enemyCriticalHitChanceValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enemyDamageLabel" />
+
+        <TextView
+            android:id="@+id/enemyCriticalHitChanceValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/enemyBlockChanceValue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/enemyCriticalHitChanceLabel"
+            app:layout_constraintTop_toBottomOf="@+id/enemyDamageValue" />
+
+        <TextView
+            android:id="@+id/enemyBlockChanceLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/block_chance_label"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/enemyBlockChanceValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enemyCriticalHitChanceLabel" />
+
+        <TextView
+            android:id="@+id/enemyBlockChanceValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/enemyBlockChanceLabel"
+            app:layout_constraintTop_toBottomOf="@+id/enemyCriticalHitChanceValue" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <TextView
+        android:id="@+id/attackLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:text="@string/combat_section"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintBottom_toTopOf="@id/knightAttack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/knightId" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/knightAttack"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/gap_8"
+        android:background="@drawable/rounded_background_white"
+        android:padding="@dimen/gap_4"
+        app:layout_constraintBottom_toTopOf="@id/skillsLabel"
+        app:layout_constraintEnd_toStartOf="@id/enemyAttack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/attackLabel">
+
+        <TextView
+            android:id="@+id/knightDefenseResultId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/knightHitResultId"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/knightHitResultId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/knightCriticalHitResultId"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/knightDefenseResultId" />
+
+        <TextView
+            android:id="@+id/knightCriticalHitResultId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/knightHitResultId" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/enemyAttack"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_background_white"
+        android:padding="@dimen/gap_4"
+        app:layout_constraintBottom_toTopOf="@id/skillsLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/knightAttack"
+        app:layout_constraintTop_toBottomOf="@id/attackLabel">
+
+        <TextView
+            android:id="@+id/zombieDefenseResultId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/zombieHitResultId"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/zombieHitResultId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toTopOf="@+id/zombieCriticalHitResultId"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/zombieDefenseResultId" />
+
+        <TextView
+            android:id="@+id/zombieCriticalHitResultId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/zombieHitResultId" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/skillsLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:text="@string/skill_bar"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintBottom_toTopOf="@+id/knightSkill1Id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/knightAttack" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/knightSkill1Id"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:text="@string/knight_skill1"
+        app:layout_constraintBottom_toTopOf="@id/skill1Label"
+        app:layout_constraintEnd_toStartOf="@+id/knightSkill2Id"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/skillsLabel"
+        app:srcCompat="@drawable/ic_brutal_hit"/>
+
+    <TextView
+        android:id="@+id/skill1Label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="4dp"
+        android:text="@string/knight_skill1"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_14"
+        android:lines="2"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/knightHitId"
+        app:layout_constraintEnd_toStartOf="@+id/skill2Label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/knightSkill1Id" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/knightSkill2Id"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:text="@string/knight_skill2"
+        app:layout_constraintBottom_toTopOf="@id/skill2Label"
+        app:layout_constraintEnd_toStartOf="@+id/knightSkill3Id"
+        app:layout_constraintStart_toEndOf="@+id/knightSkill1Id"
+        app:layout_constraintTop_toBottomOf="@id/skillsLabel"
+        app:srcCompat="@drawable/ic_critical_hit"/>
+
+    <TextView
+        android:id="@+id/skill2Label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="4dp"
+        android:text="@string/knight_skill2"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_14"
+        android:lines="2"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/knightHitId"
+        app:layout_constraintEnd_toStartOf="@+id/skill3Label"
+        app:layout_constraintStart_toEndOf="@+id/skill1Label"
+        app:layout_constraintTop_toBottomOf="@+id/knightSkill2Id" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/knightSkill3Id"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:text="@string/knight_skill3"
+        app:layout_constraintBottom_toTopOf="@id/skill3Label"
+        app:layout_constraintEnd_toStartOf="@+id/knightSkill4Id"
+        app:layout_constraintStart_toEndOf="@+id/knightSkill2Id"
+        app:layout_constraintTop_toBottomOf="@id/skillsLabel"
+        app:srcCompat="@drawable/ic_precision_hit"
         />
 
-    <LinearLayout
-        android:id="@+id/combatContainerId"
-        android:visibility="gone"
+    <TextView
+        android:id="@+id/skill3Label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="4dp"
+        android:text="@string/knight_skill3"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_14"
+        android:lines="2"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/knightHitId"
+        app:layout_constraintEnd_toStartOf="@+id/skill4Label"
+        app:layout_constraintStart_toEndOf="@+id/skill2Label"
+        app:layout_constraintTop_toBottomOf="@+id/knightSkill3Id" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/knightSkill4Id"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:text="@string/knight_skill4"
+        app:layout_constraintBottom_toTopOf="@id/skill4Label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/knightSkill3Id"
+        app:layout_constraintTop_toBottomOf="@id/skillsLabel"
+        app:srcCompat="@drawable/ic_life_steal"/>
+
+    <TextView
+        android:id="@+id/skill4Label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="4dp"
+        android:text="@string/knight_skill4"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_14"
+        android:lines="2"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/knightHitId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/skill3Label"
+        app:layout_constraintTop_toBottomOf="@+id/knightSkill4Id" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/knightHitId"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_red_light"
+        android:layout_marginTop="@dimen/gap_8"
+        android:padding="@dimen/gap_12"
+        android:text="@string/knight_hit"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        app:layout_constraintTop_toBottomOf="@+id/skill1Label"
 
+        />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/gap_8"
-            android:orientation="horizontal"
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_background_white"
-                android:orientation="vertical"
-                android:layout_weight="50"
-                android:layout_marginEnd="@dimen/gap_4"
-                >
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/knightImage"
-                        android:layout_width="match_parent"
-                        android:layout_height="140dp"
-                        android:layout_marginTop="@dimen/gap_16"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/knightNameLabel"
-                        app:srcCompat="@drawable/ic_knight"/>
-
-                    <TextView
-                        android:id="@+id/knightNameLabel"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:paddingVertical="@dimen/gap_8"
-                        android:paddingHorizontal="@dimen/gap_16"
-                        android:text="@string/knight_name_label"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_16"
-                        android:textAlignment="center"
-                        android:layout_marginTop="@dimen/gap_4"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/knightImage"
-                        app:drawableEndCompat="@drawable/baseline_edit_24" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="@dimen/gap_8"
-                    android:paddingVertical="@dimen/gap_4"
-                    >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
-
-                        <TextView
-                            android:id="@+id/knightLevelLabel"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="@dimen/weight_parameter_label"
-                            android:text="@string/level_label"
-                            android:textSize="@dimen/text_14" />
-
-                        <TextView
-                            android:id="@+id/knightLevelValue"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="@dimen/weight_parameter_value"
-                            android:gravity="center"
-                            android:textSize="@dimen/text_14" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
-
-                        <TextView
-                            android:id="@+id/knightHealthLabel"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="@dimen/weight_parameter_label"
-                            android:text="@string/health_label"
-                            android:textSize="@dimen/text_14" />
-
-                        <TextView
-                            android:id="@+id/knightHealthValue"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="@dimen/weight_parameter_value"
-                            android:gravity="center"
-                            android:textSize="@dimen/text_14" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_background_white"
-                        android:padding="@dimen/gap_4"
-                        android:orientation="horizontal"
-                        >
-
-                        <com.google.android.material.progressindicator.LinearProgressIndicator
-                            android:id="@+id/knightHealthBar"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:trackThickness="@dimen/gap_16"
-                            app:indicatorColor="@android:color/holo_red_light"
-                            app:trackCornerRadius="@dimen/gap_4"
-                            />
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
-
-                        <TextView
-                            android:id="@+id/knightExperienceLabel"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="@dimen/weight_parameter_label"
-                            android:text="@string/experience_label"
-                            android:textSize="@dimen/text_14" />
-
-                        <TextView
-                            android:id="@+id/knightExperienceValue"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="@dimen/weight_parameter_value"
-                            android:gravity="center"
-                            android:textSize="@dimen/text_14" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
-
-                        <TextView
-                            android:id="@+id/knightDamageLabel"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="@dimen/weight_parameter_label"
-                            android:text="@string/damage_label"
-                            android:textSize="@dimen/text_14" />
-
-                        <TextView
-                            android:id="@+id/knightDamageValue"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="@dimen/weight_parameter_value"
-                            android:gravity="center"
-                            android:textSize="@dimen/text_14" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
-
-                        <TextView
-                            android:id="@+id/knightCriticalHitChanceLabel"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="@dimen/weight_parameter_label"
-                            android:text="@string/critical_hit_chance_label"
-                            android:textSize="@dimen/text_14" />
-
-                        <TextView
-                            android:id="@+id/knightCriticalHitChanceValue"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="@dimen/weight_parameter_value"
-                            android:gravity="center"
-                            android:textSize="@dimen/text_14" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
-
-                        <TextView
-                            android:id="@+id/knightBlockChanceLabel"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="@dimen/weight_parameter_label"
-                            android:text="@string/block_chance_label"
-                            android:textSize="@dimen/text_14" />
-
-                        <TextView
-                            android:id="@+id/knightBlockChanceValue"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="@dimen/weight_parameter_value"
-                            android:gravity="center"
-                            android:textSize="@dimen/text_14" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_background_white"
-                android:orientation="vertical"
-                android:layout_weight="50"
-                >
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/zombieImage"
-                        android:layout_width="match_parent"
-                        android:layout_height="140dp"
-                        android:layout_marginTop="@dimen/gap_16"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/enemyNameLabel"
-                        app:srcCompat="@drawable/ic_zombie"/>
-
-                    <TextView
-                        android:id="@+id/enemyNameLabel"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:paddingVertical="@dimen/gap_8"
-                        android:paddingHorizontal="@dimen/gap_16"
-                        android:text="@string/enemy_name_label"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_16"
-                        android:textAlignment="center"
-                        android:layout_marginTop="@dimen/gap_4"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/zombieImage"
-                        app:drawableEndCompat="@drawable/baseline_edit_24"/>
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="@dimen/gap_8"
-                    android:paddingVertical="@dimen/gap_4"
-                    >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
-
-                        <TextView
-                            android:id="@+id/enemyLevelLabel"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="@dimen/weight_parameter_label"
-                            android:text="@string/level_label"
-                            android:textSize="@dimen/text_14" />
-
-                        <TextView
-                            android:id="@+id/enemyLevelValue"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="@dimen/weight_parameter_value"
-                            android:gravity="center"
-                            android:textSize="@dimen/text_14" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
-
-                        <TextView
-                            android:id="@+id/enemyHealthLabel"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="@dimen/weight_parameter_label"
-                            android:text="@string/health_label"
-                            android:textSize="@dimen/text_14" />
-
-                        <TextView
-                            android:id="@+id/enemyHealthValue"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="@dimen/weight_parameter_value"
-                            android:gravity="center"
-                            android:textSize="@dimen/text_14" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_background_white"
-                        android:padding="@dimen/gap_4"
-                        android:orientation="horizontal"
-                        >
-
-                        <com.google.android.material.progressindicator.LinearProgressIndicator
-                            android:id="@+id/zombieHealthBar"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:trackThickness="@dimen/gap_16"
-                            app:indicatorColor="@android:color/holo_red_light"
-                            app:trackCornerRadius="@dimen/gap_4"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
-
-                        <TextView
-                            android:id="@+id/enemyExperienceLabel"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="@dimen/weight_parameter_label"
-                            android:text="@string/experience_label"
-                            android:textSize="@dimen/text_14" />
-
-                        <TextView
-                            android:id="@+id/enemyExperienceValue"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="@dimen/weight_parameter_value"
-                            android:gravity="center"
-                            android:textSize="@dimen/text_14" />
-
-                    </LinearLayout>
-
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
-
-                        <TextView
-                            android:id="@+id/enemyDamageLabel"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="@dimen/weight_parameter_label"
-                            android:text="@string/damage_label"
-                            android:textSize="@dimen/text_14" />
-
-                        <TextView
-                            android:id="@+id/enemyDamageValue"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="@dimen/weight_parameter_value"
-                            android:gravity="center"
-                            android:textSize="@dimen/text_14" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
-
-                        <TextView
-                            android:id="@+id/enemyCriticalHitChanceLabel"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="@dimen/weight_parameter_label"
-                            android:text="@string/critical_hit_chance_label"
-                            android:textSize="@dimen/text_14"
-
-                            />
-
-                        <TextView
-                            android:id="@+id/enemyCriticalHitChanceValue"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="@dimen/weight_parameter_value"
-                            android:gravity="center"
-                            android:textSize="@dimen/text_14" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
-
-                        <TextView
-                            android:id="@+id/enemyBlockChanceLabel"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="@dimen/weight_parameter_label"
-                            android:text="@string/block_chance_label"
-                            android:textSize="@dimen/text_14" />
-
-                        <TextView
-                            android:id="@+id/enemyBlockChanceValue"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="@dimen/weight_parameter_value"
-                            android:gravity="center"
-                            android:textSize="@dimen/text_14" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-
-
-
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_background_white"
-            android:orientation="vertical"
-            >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/combat_section"
-                android:textSize="@dimen/text_16"
-                android:paddingHorizontal="8dp"
-                android:background="@drawable/rounded_background"
-                android:textColor="@color/black"
-                android:textAlignment="center"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/gap_4"
-                android:paddingVertical="@dimen/gap_4"
-                >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/rounded_background_white"
-                    android:padding="@dimen/gap_4"
-                    android:layout_weight="50"
-                    android:layout_marginEnd="@dimen/gap_4"
-                    >
-
-                    <TextView
-                        android:id="@+id/knightDefenseResultId"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_14"
-                        android:text="@string/start_fight"
-                        android:textAlignment="center"/>
-
-                    <TextView
-                        android:id="@+id/knightHitResultId"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_14"
-                        android:textAlignment="center"/>
-
-                    <TextView
-                        android:id="@+id/knightCriticalHitResultId"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_14"
-                        android:textAlignment="center"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/rounded_background_white"
-                    android:padding="@dimen/gap_4"
-                    android:layout_weight="50"
-                    >
-
-                    <TextView
-                        android:id="@+id/zombieDefenseResultId"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_14"
-                        android:textAlignment="center"/>
-
-                    <TextView
-                        android:id="@+id/zombieHitResultId"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_14"
-                        android:textAlignment="center"/>
-
-                    <TextView
-                        android:id="@+id/zombieCriticalHitResultId"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_14"
-                        android:textAlignment="center"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_background_white"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/gap_8"
-            >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/skill_bar"
-                android:textSize="@dimen/text_16"
-                android:paddingHorizontal="8dp"
-                android:background="@drawable/rounded_background"
-                android:textColor="@color/black"
-                android:textAlignment="center"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginHorizontal="@dimen/gap_4">
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/knightSkill1Id"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="50"
-                        android:text="@string/knight_skill1"/>
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/knightSkill2Id"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="50"
-                        android:text="@string/knight_skill2"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginHorizontal="@dimen/gap_4"
-                    android:layout_marginBottom="@dimen/gap_4">
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/knightSkill3Id"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="50"
-                        android:text="@string/knight_skill3"/>
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/knightSkill4Id"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="50"
-                        android:text="@string/knight_skill4"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/knightHitId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/gap_8"
-            android:padding="@dimen/gap_12"
-            android:text="@string/knight_hit"
-            android:background="@android:color/holo_red_light"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-
-            />
-
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
