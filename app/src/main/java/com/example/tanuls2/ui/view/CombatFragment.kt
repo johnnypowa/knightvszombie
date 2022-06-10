@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import com.example.tanuls2.R
 import com.example.tanuls2.handler.SharedPreferencesHandler
@@ -308,16 +309,24 @@ class CombatFragment : Fragment() {
 
     fun skillsEnable() {
         knightSkill1Id.isEnabled = true
+        knightSkill1Id.alpha= 1.0f
         knightSkill2Id.isEnabled = true
+        knightSkill2Id.alpha= 1.0f
         knightSkill3Id.isEnabled = true
+        knightSkill3Id.alpha= 1.0f
         knightSkill4Id.isEnabled = true
+        knightSkill4Id.alpha= 1.0f
+    }
+
+    fun skillDisable(appCompatImageView: AppCompatImageView){
+        appCompatImageView.isEnabled = false
+        appCompatImageView.alpha = 0.4f
     }
 
     fun skillExtraDamage() {
         clearZombieHitResults()
         hitWith(myKnight, extraDamage = 100)
-
-        knightSkill1Id.isEnabled = false
+        skillDisable(knightSkill1Id)
         printKnightParameter(myKnight)
         printZombieParameter(enemyZombie)
         setupKnightHealthBar()
@@ -330,8 +339,7 @@ class CombatFragment : Fragment() {
         myKnight.criticalHitChance += (1.0f - originalCriticalHitChance)
         hitWith(myKnight)
         myKnight.criticalHitChance = originalCriticalHitChance
-
-        knightSkill2Id.isEnabled = false
+        skillDisable(knightSkill2Id)
         printKnightParameter(myKnight)
         printZombieParameter(enemyZombie)
         setupKnightHealthBar()
@@ -344,8 +352,7 @@ class CombatFragment : Fragment() {
         enemyZombie.blockChance = 0.0f
         hitWith(myKnight)
         enemyZombie.blockChance = originalBlockChance
-
-        knightSkill3Id.isEnabled = false
+        skillDisable(knightSkill3Id)
         printKnightParameter(myKnight)
         printZombieParameter(enemyZombie)
         setupKnightHealthBar()
@@ -366,7 +373,7 @@ class CombatFragment : Fragment() {
                 modifiedHealth
             }
         }
-        knightSkill4Id.isEnabled = false
+        skillDisable(knightSkill4Id)
         printKnightParameter(myKnight)
         printZombieParameter(enemyZombie)
         setupKnightHealthBar()

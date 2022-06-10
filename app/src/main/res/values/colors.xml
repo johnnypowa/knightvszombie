@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="light_gray">#C8D3D3</color>
     <color name="dark_grey">#7A8181</color>
+    <color name="skill_available">#FFF30C28</color>
+    <color name="skill_not_available">#7A8181</color>
+
 </resources>

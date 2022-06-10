@@ -10,18 +10,6 @@
     android:background="@drawable/rounded_background_white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<!--    <LinearLayout-->
-<!--        android:id="@+id/cellId"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@drawable/rounded_background_white"-->
-<!--        android:orientation="vertical"-->
-<!--        android:padding="@dimen/gap_4"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent">-->
-
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/cellPictureId"
             android:layout_width="60dp"
@@ -47,11 +35,6 @@
             app:layout_constraintTop_toBottomOf="@id/cellPictureId"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="Kurva nagy kard dsadasdasadsdas1"/>
-
-<!--    </LinearLayout>-->
-
-
-
+            tools:text="Tárgy neve"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
