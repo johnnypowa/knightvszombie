@@ -2,6 +2,8 @@ package com.example.tanuls2.ui.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tanuls2.R
@@ -33,8 +35,11 @@ class InventoryAdapter(val inventoryViewModel: InventoryViewModel) : RecyclerVie
         private lateinit var currentItem: Item
 
         init {
-            itemView.cellId.setOnClickListener {
-                inventoryViewModel.onItemClicked(currentItem)
+            itemView.cellId.setOnLongClickListener { view ->
+                if (currentItem.type != ItemType.EMPTY_SLOT) {
+                    inventoryViewModel.onItemLongClicked(currentItem, view)
+                }
+                false
             }
         }
 
@@ -48,6 +53,7 @@ class InventoryAdapter(val inventoryViewModel: InventoryViewModel) : RecyclerVie
                 ItemType.JEWELLERY -> { itemView.cellPictureId.setImageResource(R.drawable.ic_treasure) }
                 ItemType.EMPTY_SLOT -> { itemView.cellPictureId.setImageResource(R.drawable.ic_empty) }
             }
+            itemView.equippedLabelId.visibility = if (currentItem.equipped) VISIBLE else GONE
         }
 
     }

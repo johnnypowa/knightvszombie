@@ -8,4 +8,5 @@ class Jewellery(name: String):Item(name,
                         0f,
                         0f,
                         0f,
-                        0,ItemType.JEWELLERY)
+                        0,ItemType.JEWELLERY,
+                        false)

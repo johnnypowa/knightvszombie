@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemDetails"
+        android:enabled="true"
+        android:title="@string/item_details"/>
+
+    <item
+        android:id="@+id/itemEquip"
+        android:enabled="true"
+        android:title="@string/item_equip"/>
+
+    <item
+        android:id="@+id/itemSell"
+        android:enabled="true"
+        android:title="@string/item_sell"/>
+
+</menu>

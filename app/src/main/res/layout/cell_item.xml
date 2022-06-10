@@ -37,4 +37,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="Tárgy neve"/>
 
+        <TextView
+            android:id="@+id/equippedLabelId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Felvéve"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14"
+            android:textAlignment="center"
+            android:ellipsize="end"
+            android:background="@android:color/holo_red_light"
+            android:alpha="0.85"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/gap_16"
+            android:paddingHorizontal="@dimen/gap_8"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

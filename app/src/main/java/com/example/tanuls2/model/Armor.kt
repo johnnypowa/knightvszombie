@@ -8,4 +8,5 @@ class Armor(name: String):Item(name,
                     0f,
                     0f,
                     0f,
-                    0, ItemType.ARMOR)
+                    0, ItemType.ARMOR,
+                    false)

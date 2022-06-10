@@ -9,7 +9,8 @@ open class Item(var itemName:String?,
                 var blockChance: Float,
                 var lifeSteal:Float,
                 var price:Int = 0,
-                var type:ItemType){
+                var type:ItemType,
+                var equipped:Boolean){
 }
 
 enum class ItemType {

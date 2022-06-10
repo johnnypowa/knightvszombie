@@ -9,4 +9,5 @@ class Weapon(itemName: String, level: Int = 0, experience: Int = 0, maxHealth: I
                     crit,
                     block,
                     lifeSteal,
-                    price, ItemType.WEAPON)
+                    price, ItemType.WEAPON,
+                     false)

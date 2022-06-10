@@ -28,4 +28,9 @@
     <string name="percentage_value">%1$d%%</string>
     <string name="empty_slot">Üres hely</string>
 
+    <string name="item_details">Tulajdonságok</string>
+    <string name="item_sell">Eladás</string>
+    <string name="item_equip">Viselés</string>
+    <string name="item_unequip">Levétel</string>
+
 </resources>

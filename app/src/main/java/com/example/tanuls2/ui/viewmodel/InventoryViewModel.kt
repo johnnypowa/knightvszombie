@@ -1,6 +1,7 @@
 package com.example.tanuls2.ui.viewmodel
 
 
+import android.view.View
 import androidx.lifecycle.ViewModel
 import com.example.tanuls2.domain.InventoryDataUseCase
 import com.example.tanuls2.model.Item
@@ -17,8 +18,8 @@ class InventoryViewModel(private val inventoryDataUseCase: InventoryDataUseCase)
 
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    fun onItemClicked(item: Item) {
-        onceLiveEvent.postValue(ItemClick(item))
+    fun onItemLongClicked(item: Item, view: View) {
+        onceLiveEvent.postValue(ItemClick(item, view))
     }
 
     fun loadAllInventory() {
@@ -40,5 +41,5 @@ class InventoryViewModel(private val inventoryDataUseCase: InventoryDataUseCase)
     }
 }
 
-class ItemClick(val item: Item) : SingleEvent
+class ItemClick(val item: Item, val view: View) : SingleEvent
 class LoadInventory(val loadItemList: ArrayList<Item>) : SingleEvent
