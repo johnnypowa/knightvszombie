@@ -22,7 +22,30 @@
         android:id="@+id/inventory"
         android:label="Táska"
         android:name="com.example.tanuls2.ui.view.InventoryFragment"
-        tools:layout="@layout/fragment_inventory"
-        />
+        tools:layout="@layout/fragment_inventory">
+
+        <action
+            android:id="@+id/action_inventory_to_item_details"
+            app:destination="@id/itemDetails">
+
+            <argument
+                android:name="item"
+                app:argType="com.example.tanuls2.model.Item"/>
+
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/itemDetails"
+        android:label="Tárgy tulajdonságai"
+        android:name="com.example.tanuls2.ui.view.ItemDetailFragment"
+        tools:layout="@layout/fragment_item_datail">
+
+        <argument
+            android:name="item"
+            app:argType="com.example.tanuls2.model.Item"/>
+
+    </fragment>
 
 </navigation>

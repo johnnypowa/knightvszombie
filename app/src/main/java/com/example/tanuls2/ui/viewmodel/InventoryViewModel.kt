@@ -16,6 +16,8 @@ class InventoryViewModel(private val inventoryDataUseCase: InventoryDataUseCase)
 
     val onceLiveEvent = OnceLiveEvent<SingleEvent>() //Live data
 
+    var currentItems: ArrayList<Item> = arrayListOf()
+
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     fun onItemLongClicked(item: Item, view: View) {
@@ -28,6 +30,7 @@ class InventoryViewModel(private val inventoryDataUseCase: InventoryDataUseCase)
             .observeOn(Schedulers.io())
             .subscribe(
                 {
+                    currentItems = it
                     onceLiveEvent.postValue(LoadInventory(it))
                 },{
                     onceLiveEvent.postValue(ShowError(it.message))
