@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.example.tanuls2.domain.DroppedItemUseCase
 import com.example.tanuls2.domain.LoadKnightDataUseCase
 import com.example.tanuls2.domain.LoadZombieDataUseCase
+import com.example.tanuls2.handler.SharedPreferencesHandler
 import com.example.tanuls2.model.CombatModel
 import com.example.tanuls2.model.Item
 import com.example.tanuls2.model.Knight
@@ -39,6 +40,7 @@ class CombatViewModel(
             .observeOn(Schedulers.io())
             .subscribe(
                 {
+                    it.knight.itemList = SharedPreferencesHandler.storedItemList
                     onceLiveEvent.postValue(ShowAllContent(it.knight, it.zombie))
                 },{
                     onceLiveEvent.postValue(ShowError(it.message))

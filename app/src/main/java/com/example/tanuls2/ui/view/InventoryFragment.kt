@@ -41,6 +41,11 @@ class InventoryFragment : Fragment() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        inventoryViewModel.currentItems = arrayListOf()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

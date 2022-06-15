@@ -13,8 +13,4 @@ class InventoryLocalDataSource() {
         return Single.fromCallable { SharedPreferencesHandler.storedItemList }
             .subscribeOn(Schedulers.io())
     }
-
-    fun saveItemListToLocal(items: ArrayList<Item>) {
-        SharedPreferencesHandler.storedItemList = items
-    }
 }
