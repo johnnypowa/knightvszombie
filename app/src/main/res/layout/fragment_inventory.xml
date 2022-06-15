@@ -4,21 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginHorizontal="@dimen/gap_20"
-    android:layout_marginVertical="@dimen/gap_20">
+    >
 
-    <TextView
-        android:id="@+id/inventoryLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Táska"
-        android:textAlignment="center"
-        android:textSize="@dimen/text_16"
+    <include
+        android:id="@+id/inventoryToolbar"
+        layout="@layout/toolbar"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/gap_20"
+        android:layout_marginVertical="@dimen/gap_20"
+        app:layout_constraintTop_toBottomOf="@id/inventoryToolbar"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/bagRecyclerViewId"
-        />
+        app:layout_constraintBottom_toBottomOf="parent">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bagRecyclerViewId"
@@ -27,7 +30,7 @@
         app:layout_constraintVertical_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/inventoryLabel"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/itemPropertiesId"
         tools:listitem="@layout/cell_item"
         tools:itemCount="12"
@@ -166,5 +169,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

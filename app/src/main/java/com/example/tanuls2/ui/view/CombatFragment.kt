@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.tanuls2.R
 import com.example.tanuls2.handler.SharedPreferencesHandler
@@ -15,6 +17,7 @@ import com.example.tanuls2.ui.viewmodel.*
 import com.example.tanuls2.util.SingleEvent
 import com.example.tanuls2.util.observe
 import kotlinx.android.synthetic.main.fragment_combat.*
+import kotlinx.android.synthetic.main.toolbar.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CombatFragment : Fragment() {
@@ -46,6 +49,8 @@ class CombatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupToolbar()
+
         combatViewModel.loadAllContent()
 
 
@@ -76,6 +81,11 @@ class CombatFragment : Fragment() {
         knightSkill4Id.setOnClickListener {
             skillBloodSiphon()
         }
+    }
+
+    private fun setupToolbar() {
+        (requireActivity() as AppCompatActivity).setSupportActionBar(combatToolbar as Toolbar)
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.combat_toolbar_title)
     }
 
     fun dataEvent(event: SingleEvent?) {

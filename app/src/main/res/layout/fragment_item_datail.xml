@@ -2,47 +2,152 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:id="@+id/knightImageAndName"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/knightLevelLabel"-->
-<!--        app:layout_constraintEnd_toStartOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent">-->
+    <include
+        android:id="@+id/itemDetailToolbar"
+        layout="@layout/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-<!--        <androidx.appcompat.widget.AppCompatImageView-->
-<!--            android:id="@+id/knightImage"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="140dp"-->
-<!--            android:layout_marginTop="@dimen/gap_16"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/knightNameLabel"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:srcCompat="@drawable/ic_knight" />-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/gap_20"
+        android:layout_marginVertical="@dimen/gap_20"
+        app:layout_constraintTop_toBottomOf="@id/itemDetailToolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-<!--        <TextView-->
-<!--            android:id="@+id/knightNameLabel"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="@dimen/gap_4"-->
-<!--            android:paddingHorizontal="@dimen/gap_16"-->
-<!--            android:paddingVertical="@dimen/gap_8"-->
-<!--            android:text="@string/knight_name_label"-->
-<!--            android:textAlignment="center"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="@dimen/text_16"-->
-<!--            app:drawableEndCompat="@drawable/baseline_edit_24"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/knightImage" />-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/itemImageAndName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/itemImage"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginTop="@dimen/gap_16"
+            app:layout_constraintBottom_toTopOf="@id/itemName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat ="@drawable/ic_armor"
+            />
 
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+        <TextView
+            android:id="@+id/itemName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_4"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            android:text="Tárgy neve"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemImage" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/itemLevelLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            android:text="@string/level_label"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toStartOf="@id/itemLevel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemImageAndName"
+            app:layout_constraintBottom_toTopOf="@id/itemDamageLabel"
+            />
+
+        <TextView
+            android:id="@+id/itemLevel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            tools:text = "Szint"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/itemLevelLabel"
+            app:layout_constraintTop_toBottomOf="@id/itemImageAndName"
+            app:layout_constraintBottom_toTopOf="@id/itemDamage"
+            />
+
+        <TextView
+            android:id="@+id/itemDamageLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            android:text="@string/damage_label"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toStartOf="@id/itemDamage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemLevelLabel" />
+
+        <TextView
+            android:id="@+id/itemDamage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            tools:text="Sebzés"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/itemDamageLabel"
+            app:layout_constraintTop_toBottomOf="@id/itemLevel" />
+
+        <TextView
+            android:id="@+id/itemMaxHealthLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            android:text="@string/health_label"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toStartOf="@id/itemMaxHealth"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemDamageLabel" />
+
+        <TextView
+            android:id="@+id/itemMaxHealth"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            tools:text="Élet"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/itemMaxHealthLabel"
+            app:layout_constraintTop_toBottomOf="@id/itemDamage" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

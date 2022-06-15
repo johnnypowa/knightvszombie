@@ -25,6 +25,7 @@
     <string name="combat_section">Harcmező</string>
     <string name="skill_bar">Képességek</string>
 
+
     <string name="percentage_value">%1$d%%</string>
     <string name="empty_slot">Üres hely</string>
 
@@ -32,5 +33,10 @@
     <string name="item_sell">Eladás</string>
     <string name="item_equip">Viselés</string>
     <string name="item_unequip">Levétel</string>
+
+    <string name="combat_toolbar_title">@string/combat_section</string>
+    <string name="inventory_toolbar_title">Táska</string>
+    <string name="item_details_toolbar_title">Tulajdonságok</string>
+    <string name="skills_toolbar_title">Képességek</string>
 
 </resources>

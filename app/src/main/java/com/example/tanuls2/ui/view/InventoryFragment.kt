@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,6 +21,7 @@ import com.example.tanuls2.ui.viewmodel.ItemClick
 import com.example.tanuls2.ui.viewmodel.LoadInventory
 import com.example.tanuls2.util.SingleEvent
 import com.example.tanuls2.util.observe
+import kotlinx.android.synthetic.main.fragment_combat.*
 import kotlinx.android.synthetic.main.fragment_inventory.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -57,6 +60,13 @@ class InventoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupToolbar()
+
+    }
+
+    private fun setupToolbar() {
+        (requireActivity() as AppCompatActivity).setSupportActionBar(inventoryToolbar as Toolbar)
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.inventory_toolbar_title)
     }
 
     fun dataEvent(event: SingleEvent?) {
