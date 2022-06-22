@@ -19,6 +19,12 @@ object SharedPreferencesHandler {
         preferences = appContext.getSharedPreferences(NAME, MODE)
     }
 
+    fun isFirstStart() : Boolean {
+        return preferences.getBoolean("isFirstStart", true)}
+
+    fun setFirstStart(value: Boolean) {
+        preferences.edit().putBoolean("isFirstStart", value).apply()}
+
     var storedKnight: Knight?
         set(value) = preferences.edit().putString("myKnight", Gson().toJson(value)).apply()
         get() = Gson().fromJson(preferences.getString("myKnight", null), object: TypeToken<Knight>(){}.type)

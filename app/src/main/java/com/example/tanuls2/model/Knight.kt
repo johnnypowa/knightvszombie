@@ -1,15 +1,12 @@
 package com.example.tanuls2.model
 
-import com.example.tanuls2.handler.SharedPreferencesHandler
+data class Knight(val uid: Int,
+                  var experience: Int,
+                  var currentHealth: Int,
+                  var maxHealth: Int,
+                  var level:Int,
+                  var damage:Int,
+                  var criticalHitChance:Float,
+                  var blockChance:Float,
+                  var itemList: ArrayList<Item> = arrayListOf())
 
-data class Knight(var itemList: ArrayList<Item> = ArrayList(12)) : Character(0,
-                                                            100,
-                                                            100,
-                                                            1,
-                                                            100,
-                                                            0.2f,
-                                                            0.2f) {
-    init {
-
-    }
-}
