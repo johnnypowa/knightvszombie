@@ -37,13 +37,13 @@ val repositoryModule = module {
 val useCaseModule = module {
     single { LoadKnightDataUseCase(get()) }
     single { LoadZombieDataUseCase(get()) }
-    single { InventoryDataUseCase(get()) }
     single { SkillsDataUseCase(get()) }
     single { DroppedItemUseCase(get()) }
+    single { SaveKnightToDbUseCase(get())}
 }
 
 val viewModelModule = module {
-    viewModel { CombatViewModel(get(), get(), get()) }
+    viewModel { CombatViewModel(get(), get(), get(),get()) }
     viewModel { InventoryViewModel(get()) }
 }
 

@@ -101,6 +101,7 @@ class CombatFragment : Fragment() {
             is DroppedItem -> {
                 putItemToInventory(event.droppedItem)
             }
+            is SuccessfulSave -> Toast.makeText(requireContext(), "sikeres mentés", Toast.LENGTH_LONG).show()
         }
 
     }
@@ -230,7 +231,7 @@ class CombatFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-            SharedPreferencesHandler.storedKnight = myKnight
+            combatViewModel.saveKnightToDb()
             clearZombieHitResults()
             clearKnightHitResults()
             printKnightParameter(myKnight)
@@ -452,11 +453,4 @@ class CombatFragment : Fragment() {
         checkKnightHealthStatus()
         checkZombieHealthStatus()
     }
-
-    override fun onPause() {
-        super.onPause()
-        // TODO: itt lesz lementve a currentKnight az adatbázisba 
-        Toast.makeText(requireContext(), "onPause", Toast.LENGTH_SHORT).show()
-    }
-
 }
