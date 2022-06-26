@@ -1,5 +1,9 @@
 package com.example.tanuls2.app
 
+import android.content.Context
+import androidx.room.Room
+import com.example.tanuls2.db.AppDatabase
+import com.example.tanuls2.db.dao.KnightDao
 import com.example.tanuls2.domain.*
 import com.example.tanuls2.service.datasource.*
 import com.example.tanuls2.service.repository.CombatRepository
@@ -18,7 +22,7 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 val dataSourceModule = module {
-    single { CombatLocalDataSource() }
+    single { CombatLocalDataSource(get()) }
     single { InventoryLocalDataSource() }
     single { SkillsLocalDataSource() }
     single {InventoryRemoteDataSource(get())}
@@ -33,14 +37,14 @@ val repositoryModule = module {
 val useCaseModule = module {
     single { LoadKnightDataUseCase(get()) }
     single { LoadZombieDataUseCase(get()) }
-    single { InventoryDataUseCase(get()) }
     single { SkillsDataUseCase(get()) }
     single { DroppedItemUseCase(get()) }
+    single { SaveKnightToDbUseCase(get())}
 }
 
 val viewModelModule = module {
-    viewModel { CombatViewModel(get(), get(), get()) }
-    viewModel { InventoryViewModel(get()) }
+    viewModel { CombatViewModel(get(), get(), get(),get()) }
+    viewModel { InventoryViewModel(get(),get()) }
 }
 
 val apiModule = module {
@@ -79,4 +83,21 @@ val retrofitModule = module {
     single { provideGson() }
     single { provideOkhttpClient() }
     single { provideRetrofit(get(), get()) }
+}
+
+val appDataBaseModule = module {
+
+    fun provideDatabase(context: Context) = Room.databaseBuilder(context, AppDatabase::class.java, "app_database").build()
+
+    fun provideKnightDao(database: AppDatabase) : KnightDao {
+        return database.knightDao()
+    }
+
+//    fun provideDatabase1(context: Context) : AppDatabase {
+//       return Room.databaseBuilder(context, AppDatabase::class.java, "app_database").build()
+//   }
+
+    single { provideDatabase(get()) }
+    single { provideKnightDao(get()) }
+
 }

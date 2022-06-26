@@ -19,6 +19,7 @@ import com.example.tanuls2.ui.view.adapter.InventoryAdapter
 import com.example.tanuls2.ui.viewmodel.InventoryViewModel
 import com.example.tanuls2.ui.viewmodel.ItemClick
 import com.example.tanuls2.ui.viewmodel.LoadInventory
+import com.example.tanuls2.ui.viewmodel.SuccessfulSave
 import com.example.tanuls2.util.SingleEvent
 import com.example.tanuls2.util.observe
 import kotlinx.android.synthetic.main.fragment_combat.*
@@ -51,6 +52,7 @@ class InventoryFragment : Fragment() {
 
         observe(inventoryViewModel.onceLiveEvent) {
             dataEvent(it)
+
         }
     }
 
@@ -78,9 +80,11 @@ class InventoryFragment : Fragment() {
         when (event) {
             is ItemClick -> {
                 showPopupMenu(event.item, event.view)
-                //Toast.makeText(requireContext(), event.item.itemName, Toast.LENGTH_SHORT).show()
             }
             is LoadInventory -> {loadItemList(event.loadItemList)}
+            is SuccessfulSave -> {
+                inventoryLoadingIndicator(false)
+            }
         }
     }
 
@@ -94,20 +98,23 @@ class InventoryFragment : Fragment() {
                 R.id.itemEquip -> {
                     item.equipped = true
                     inventoryAdapter.notifyDataSetChanged()
-                    SharedPreferencesHandler.storedItemList = inventoryViewModel.currentItems
+                    inventoryLoadingIndicator(true)
+                    inventoryViewModel.saveKnightToDb()
                 }
                 R.id.itemUnEquip -> {
                     item.equipped = false
                     inventoryAdapter.notifyDataSetChanged()
-                    SharedPreferencesHandler.storedItemList = inventoryViewModel.currentItems
+                    inventoryLoadingIndicator(true)
+                    inventoryViewModel.saveKnightToDb()
                 }
                 R.id.itemSell -> {
                     val index = inventoryAdapter.itemList.indexOf(item)
                     inventoryAdapter.itemList.removeAt(index)
                     inventoryAdapter.itemList.add(index, EmptySlot())
                     inventoryAdapter.notifyDataSetChanged()
-                    inventoryViewModel.currentItems = inventoryAdapter.itemList
-                    SharedPreferencesHandler.storedItemList = inventoryViewModel.currentItems
+                    inventoryViewModel.currentKnight!!.itemList = inventoryAdapter.itemList
+                    inventoryLoadingIndicator(true)
+                    inventoryViewModel.saveKnightToDb()
                 }
             }
             true
@@ -130,4 +137,14 @@ class InventoryFragment : Fragment() {
         val action = InventoryFragmentDirections.actionInventoryToItemDetails(item)
         findNavController().navigate(action)
     }
+
+    fun inventoryLoadingIndicator(active:Boolean) {
+        if (active) {
+            inventoryLoadingIndicatorId.visibility = View.VISIBLE
+            inventoryLoadingIndicatorId.bringToFront()
+        } else {
+            inventoryLoadingIndicatorId.visibility = View.GONE
+        }
+    }
+
 }
