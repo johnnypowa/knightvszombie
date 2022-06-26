@@ -44,7 +44,7 @@ val useCaseModule = module {
 
 val viewModelModule = module {
     viewModel { CombatViewModel(get(), get(), get(),get()) }
-    viewModel { InventoryViewModel(get()) }
+    viewModel { InventoryViewModel(get(),get()) }
 }
 
 val apiModule = module {

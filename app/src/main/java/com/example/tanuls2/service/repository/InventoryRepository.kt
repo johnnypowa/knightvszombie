@@ -7,10 +7,6 @@ import io.reactivex.rxjava3.core.Single
 
 class InventoryRepository(val inventoryLocalDatasource:InventoryLocalDataSource, val inventoryRemoteDataSource:InventoryRemoteDataSource) {
 
-    fun fetchInventory() : Single<ArrayList<Item>> {
-        return inventoryLocalDatasource.getItemListFromLocal()
-    }
-
     fun generateItemFromRemote() : Single<Item> {
         return inventoryRemoteDataSource.drawCard()
             .map {

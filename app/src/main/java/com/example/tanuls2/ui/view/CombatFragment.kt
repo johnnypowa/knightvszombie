@@ -101,19 +101,9 @@ class CombatFragment : Fragment() {
             is DroppedItem -> {
                 putItemToInventory(event.droppedItem)
             }
-            is SuccessfulSave -> Toast.makeText(requireContext(), "sikeres mentés", Toast.LENGTH_LONG).show()
         }
 
     }
-
-//    fun inventoryFirstRunCheck(){
-//        if (combatViewModel.currentKnight!!.itemList.size == 0) {
-//            for (i in 0..11) {
-//                combatViewModel.currentKnight!!.itemList.add(EmptySlot())
-//            }
-//            SharedPreferencesHandler.storedItemList = combatViewModel.currentKnight!!.itemList
-//        }
-//    }
 
     fun showErrorMessage(message: String?) {
         Toast.makeText(requireContext(), message ?: "Hiba történt.", Toast.LENGTH_SHORT).show()
@@ -184,7 +174,6 @@ class CombatFragment : Fragment() {
             }
             .setCancelable(false)
             .create()
-        //Toast.makeText(this,"ez egy szöveg", Toast.LENGTH_LONG).show()
     }
 
     fun createDefeatPopup() {
@@ -197,7 +186,6 @@ class CombatFragment : Fragment() {
             }
             .setCancelable(false)
             .create()
-        //Toast.makeText(this,"ez egy szöveg", Toast.LENGTH_LONG).show()
     }
 
     fun putItemToInventory(item: Item){
@@ -208,8 +196,7 @@ class CombatFragment : Fragment() {
                 val indexOfEmptySlot = myKnight.itemList.indexOf(firstEmptySlot)
                 myKnight.itemList.removeAt(indexOfEmptySlot)
                 myKnight.itemList.add(indexOfEmptySlot, item)
-                SharedPreferencesHandler.storedItemList = myKnight.itemList
-
+                combatViewModel.saveKnightToDb()
 
                 if (indexOfEmptySlot < 11) {
                     Toast.makeText(
@@ -231,7 +218,6 @@ class CombatFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-            combatViewModel.saveKnightToDb()
             clearZombieHitResults()
             clearKnightHitResults()
             printKnightParameter(myKnight)
