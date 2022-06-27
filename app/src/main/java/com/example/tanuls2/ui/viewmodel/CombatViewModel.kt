@@ -32,8 +32,8 @@ class CombatViewModel(
 
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    val knightDataFlow : Single<KnightEntity> = loadKnightDataUseCase.execute().delay(1L, TimeUnit.SECONDS)
-    val zombieDataFlow: Single<Zombie> = loadZombieDataUseCase.execute().delay(1L, TimeUnit.SECONDS)
+    val knightDataFlow : Single<KnightEntity> = loadKnightDataUseCase.execute()//.delay(1L, TimeUnit.SECONDS)
+    val zombieDataFlow: Single<Zombie> = loadZombieDataUseCase.execute()//.delay(1L, TimeUnit.SECONDS)
 
     var currentKnight: Knight? = null
 

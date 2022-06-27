@@ -11,22 +11,18 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.tanuls2.R
-import com.example.tanuls2.db.entity.KnightEntity
-import com.example.tanuls2.handler.SharedPreferencesHandler
 import com.example.tanuls2.model.*
 import com.example.tanuls2.ui.viewmodel.*
 import com.example.tanuls2.util.SingleEvent
 import com.example.tanuls2.util.observe
 import kotlinx.android.synthetic.main.fragment_combat.*
-import kotlinx.android.synthetic.main.toolbar.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CombatFragment : Fragment() {
 
-    lateinit var enemyZombie: Zombie
+    lateinit var zombie: Zombie
     var defeatAlertdialog: AlertDialog? = null
     var victoryAlertdialog: AlertDialog? = null
-    //val strongZombie = Zombie(health = 2000)
 
     val combatViewModel: CombatViewModel by viewModel()
 
@@ -53,14 +49,11 @@ class CombatFragment : Fragment() {
 
         combatViewModel.loadAllContent()
 
-
-        //combatViewModel.loadEnemyZombieData()
-        //enemyZombie = combatViewModel.loadEnemyZombieData()
         createDefeatPopup()
         createVictoryPopup()
 
         knightHitId.setOnClickListener {
-            if (combatViewModel.currentKnight!!.currentHealth > 0 || enemyZombie.currentHealth > 0) {
+            if (combatViewModel.currentKnight!!.currentHealth > 0 && zombie.currentHealth > 0) {
                 hitWithKnight()
                 hitWithZombie()
             }
@@ -115,15 +108,12 @@ class CombatFragment : Fragment() {
     }
 
     fun showKnightContent(knightData: Knight) {
-        //inventoryFirstRunCheck()
-        setupKnightHealthBar()
         printKnightParameter(knightData)
     }
 
     fun showEnemyZombieContent(zombieData: Zombie) {
-        enemyZombie = zombieData
-        setupZombieHealthBar()
-        printZombieParameter(enemyZombie)
+        zombie = zombieData
+        printZombieParameter(zombie)
     }
 
     fun clearKnightHitResults() {
@@ -147,8 +137,8 @@ class CombatFragment : Fragment() {
             getString(R.string.percentage_value, (knight.criticalHitChance * 100).toInt())
         knightBlockChanceValue.text =
             getString(R.string.percentage_value, (knight.blockChance * 100).toInt())
+        setupKnightHealthBar()
     }
-
 
     fun printZombieParameter(zombie: Zombie) {
         enemyLevelValue.text = zombie.level.toString()
@@ -159,6 +149,7 @@ class CombatFragment : Fragment() {
             getString(R.string.percentage_value, (zombie.criticalHitChance * 100).toInt())
         enemyBlockChanceValue.text =
             getString(R.string.percentage_value, (zombie.blockChance * 100).toInt())
+        setupZombieHealthBar()
     }
 
     fun createVictoryPopup() {
@@ -218,38 +209,34 @@ class CombatFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-            clearZombieHitResults()
-            clearKnightHitResults()
-            printKnightParameter(myKnight)
-            printZombieParameter(enemyZombie)
-            skillsEnable()
-            setupKnightHealthBar()
-            setupZombieHealthBar()
         }
     }
 
     fun setUpVictoryStart() {
         combatViewModel.currentKnight?.let { myKnight ->
-            enemyZombie.currentHealth = enemyZombie.maxHealth
+            zombie.currentHealth = zombie.maxHealth
             myKnight.currentHealth = myKnight.maxHealth
             myKnight.experience += 50
             combatViewModel.getDroppedItem()
+            clearZombieHitResults()
+            clearKnightHitResults()
+            printKnightParameter(myKnight)
+            printZombieParameter(zombie)
+            skillsEnable()
         }
     }
 
     fun setUpDefeatStart() {
         combatViewModel.currentKnight?.let { myKnight ->
-            enemyZombie.currentHealth = enemyZombie.maxHealth
+            zombie.currentHealth = zombie.maxHealth
             myKnight.currentHealth = myKnight.maxHealth
             myKnight.experience -= 50
             clearZombieHitResults()
             clearKnightHitResults()
             knightHitResultId.text = getString(R.string.start_fight)
             printKnightParameter(myKnight)
-            printZombieParameter(enemyZombie)
+            printZombieParameter(zombie)
             skillsEnable()
-            setupKnightHealthBar()
-            setupZombieHealthBar()
         }
     }
 
@@ -265,7 +252,7 @@ class CombatFragment : Fragment() {
 
     fun checkZombieHealthStatus() {
                 if (victoryAlertdialog?.isShowing == false) {
-                    if (enemyZombie.currentHealth <= 0) {
+                    if (zombie.currentHealth <= 0) {
                         victoryAlertdialog?.show()
                     }
                 }
@@ -287,8 +274,8 @@ class CombatFragment : Fragment() {
 
     fun setupZombieHealthBar() {
         zombieHealthBar.apply {
-            max = enemyZombie.maxHealth
-            progress = enemyZombie.currentHealth
+            max = zombie.maxHealth
+            progress = zombie.currentHealth
         }
     }
 
@@ -297,18 +284,16 @@ class CombatFragment : Fragment() {
         }
 
     fun criticalHitZombie(): Boolean {
-        return randomValueGenerator() <= enemyZombie.criticalHitChance
+        return randomValueGenerator() <= zombie.criticalHitChance
     }
 
     fun blockChanceKnight(): Boolean {
             return randomValueGenerator() <= combatViewModel.currentKnight!!.blockChance
         }
 
-
     fun blockChanceZombie(): Boolean {
-        return randomValueGenerator() <= enemyZombie.blockChance
+        return randomValueGenerator() <= zombie.blockChance
     }
-
 
     fun skillsEnable() {
         knightSkill1Id.isEnabled = true
@@ -331,9 +316,7 @@ class CombatFragment : Fragment() {
         hitWithKnight(extraDamage = 100)
         skillDisable(knightSkill1Id)
         printKnightParameter(combatViewModel.currentKnight!!)
-        printZombieParameter(enemyZombie)
-        setupKnightHealthBar()
-        setupZombieHealthBar()
+        printZombieParameter(zombie)
     }
 
     fun skillExtraCriticalHitChance() {
@@ -344,30 +327,26 @@ class CombatFragment : Fragment() {
         combatViewModel.currentKnight!!.criticalHitChance = originalCriticalHitChance
         skillDisable(knightSkill2Id)
         printKnightParameter(combatViewModel.currentKnight!!)
-        printZombieParameter(enemyZombie)
-        setupKnightHealthBar()
-        setupZombieHealthBar()
+        printZombieParameter(zombie)
     }
 
     fun skillEliminateBlockChance() {
         clearZombieHitResults()
-        val originalBlockChance = enemyZombie.blockChance
-        enemyZombie.blockChance = 0.0f
+        val originalBlockChance = zombie.blockChance
+        zombie.blockChance = 0.0f
         hitWithKnight()
-        enemyZombie.blockChance = originalBlockChance
+        zombie.blockChance = originalBlockChance
         skillDisable(knightSkill3Id)
         printKnightParameter(combatViewModel.currentKnight!!)
-        printZombieParameter(enemyZombie)
-        setupKnightHealthBar()
-        setupZombieHealthBar()
+        printZombieParameter(zombie)
     }
 
     fun skillBloodSiphon() {
         clearZombieHitResults()
-        val actualHealthOfEnemy = enemyZombie.currentHealth
+        val actualHealthOfEnemy = zombie.currentHealth
         hitWithKnight()
         val modifiedHealth =
-            combatViewModel.currentKnight!!.currentHealth + (actualHealthOfEnemy - enemyZombie.currentHealth)
+            combatViewModel.currentKnight!!.currentHealth + (actualHealthOfEnemy - zombie.currentHealth)
         combatViewModel.currentKnight!!.currentHealth = when (modifiedHealth >= combatViewModel.currentKnight!!.maxHealth) {
             true -> {
                 combatViewModel.currentKnight!!.maxHealth
@@ -378,11 +357,8 @@ class CombatFragment : Fragment() {
         }
         skillDisable(knightSkill4Id)
         printKnightParameter(combatViewModel.currentKnight!!)
-        printZombieParameter(enemyZombie)
-        setupKnightHealthBar()
-        setupZombieHealthBar()
+        printZombieParameter(zombie)
     }
-
 
     fun hitWithKnight( extraDamage: Int = 0) {
 
@@ -392,25 +368,18 @@ class CombatFragment : Fragment() {
             knightHitResultId.text = getString(R.string.notsuccessfull_hit)
         } else {
             if (criticalHitKnight()) {
-                //enemyZombie.health = enemyZombie.health - myKnight.damage * 2
-                enemyZombie.currentHealth -= combatViewModel.currentKnight!!.damage * 2 + extraDamage
-                knightHitResultId.text =
-                    getString(R.string.successfull_hit)
-                knightCriticalHitResultId.text =
-                    getString(R.string.critical_hit)
+                zombie.currentHealth -= combatViewModel.currentKnight!!.damage * 2 + extraDamage
+                knightHitResultId.text = getString(R.string.successfull_hit)
+                knightCriticalHitResultId.text = getString(R.string.critical_hit)
             } else {
-                enemyZombie.currentHealth -= combatViewModel.currentKnight!!.damage + extraDamage
+                zombie.currentHealth -= combatViewModel.currentKnight!!.damage + extraDamage
                 knightHitResultId.text = getString(R.string.successfull_hit)
             }
         }
-
-        printZombieParameter(enemyZombie)
-        printKnightParameter(combatViewModel.currentKnight!!)
-        setupKnightHealthBar()
-        setupZombieHealthBar()
         checkKnightHealthStatus()
         checkZombieHealthStatus()
-
+        printKnightParameter(combatViewModel.currentKnight!!)
+        printZombieParameter(zombie)
     }
 
     fun hitWithZombie() {
@@ -421,22 +390,19 @@ class CombatFragment : Fragment() {
             zombieHitResultId.text = getString(R.string.notsuccessfull_hit)
         } else {
             if (criticalHitZombie()) {
-                combatViewModel.currentKnight!!.currentHealth -= enemyZombie.damage * 2
+                combatViewModel.currentKnight!!.currentHealth -= zombie.damage * 2
                 zombieHitResultId.text =
                     getString(R.string.successfull_hit)
                 zombieCriticalHitResultId.text =
                     getString(R.string.critical_hit)
             } else {
-                combatViewModel.currentKnight!!.currentHealth -= enemyZombie.damage
+                combatViewModel.currentKnight!!.currentHealth -= zombie.damage
                 zombieHitResultId.text = getString(R.string.successfull_hit)
             }
         }
-
-        printZombieParameter(enemyZombie)
-        printKnightParameter(combatViewModel.currentKnight!!)
-        setupKnightHealthBar()
-        setupZombieHealthBar()
         checkKnightHealthStatus()
         checkZombieHealthStatus()
+        printKnightParameter(combatViewModel.currentKnight!!)
+        printZombieParameter(zombie)
     }
 }

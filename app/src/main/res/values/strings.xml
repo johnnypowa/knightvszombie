@@ -9,10 +9,10 @@
     <string name="critical_hit">Kritikus ütés!</string>
 
 
-    <string name="knight_skill1">Brutális ütés</string>
-    <string name="knight_skill2">Kritikus csapás</string>
+    <string name="knight_skill1">Dupla ütés</string>
+    <string name="knight_skill2">Kritikus ütés</string>
     <string name="knight_skill3">Precíz ütés</string>
-    <string name="knight_skill4">Élet szipolyozás</string>
+    <string name="knight_skill4">Gyógyító ütés</string>
 
     <string name="knight_name_label">Lovag</string>
     <string name="enemy_name_label">Zombi</string>

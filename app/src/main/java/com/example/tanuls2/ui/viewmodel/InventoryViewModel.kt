@@ -26,7 +26,7 @@ class InventoryViewModel(private val loadKnightDataUseCase: LoadKnightDataUseCas
 
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    fun onItemLongClicked(item: Item, view: View) {
+    fun onItemClicked(item: Item, view: View) {
         onceLiveEvent.postValue(ItemClick(item, view))
     }
 

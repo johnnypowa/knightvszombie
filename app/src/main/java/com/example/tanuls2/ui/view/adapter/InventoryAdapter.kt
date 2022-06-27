@@ -35,9 +35,9 @@ class InventoryAdapter(val inventoryViewModel: InventoryViewModel) : RecyclerVie
         private lateinit var currentItem: Item
 
         init {
-            itemView.cellId.setOnLongClickListener { view ->
+            itemView.cellId.setOnClickListener { view ->
                 if (currentItem.type != ItemType.EMPTY_SLOT) {
-                    inventoryViewModel.onItemLongClicked(currentItem, view)
+                    inventoryViewModel.onItemClicked(currentItem, view)
                 }
                 false
             }
