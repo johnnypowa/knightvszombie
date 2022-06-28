@@ -59,8 +59,14 @@ class ItemDetailFragment: Fragment() {
     fun loadItemProperties(){
 
         itemName.text= item.itemName
-
-
+        itemLevel.text = item.level.toString()
+        itemMaxHealth.text=item.maxHealth.toString()
+        itemExperience.text = item.experience.toString()
+        itemDamage.text = item.damage.toString()
+        itemCriticalHitChance.text = item.criticalHitChance.toString()
+        itemBlockChance.text = item.blockChance.toString()
+        itemLifeSteal.text = item.lifeSteal.toString()
+        itemPrice.text = item.price.toString()
 
     }
 

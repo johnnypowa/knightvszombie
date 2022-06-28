@@ -24,7 +24,8 @@
     <string name="block_chance_label">Blokkolás</string>
     <string name="combat_section">Harcmező</string>
     <string name="skill_bar">Képességek</string>
-
+    <string name="life_steal_label">Életerő lopás</string>
+    <string name="item_price_label">Ár</string>
 
     <string name="percentage_value">%1$d%%</string>
     <string name="empty_slot">Üres hely</string>

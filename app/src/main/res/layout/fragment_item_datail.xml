@@ -26,9 +26,12 @@
         android:id="@+id/itemImageAndName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_background_white"
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/itemDetails"
+        >
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/itemImage"
@@ -60,6 +63,18 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/itemDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_16"
+            android:padding="@dimen/gap_8"
+            android:background="@drawable/rounded_background_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemImageAndName"
+            >
+
         <TextView
             android:id="@+id/itemLevelLabel"
             android:layout_width="0dp"
@@ -72,8 +87,8 @@
             android:textSize="@dimen/text_16"
             app:layout_constraintEnd_toStartOf="@id/itemLevel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/itemImageAndName"
-            app:layout_constraintBottom_toTopOf="@id/itemDamageLabel"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/itemMaxHealthLabel"
             />
 
         <TextView
@@ -88,37 +103,9 @@
             android:textSize="@dimen/text_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/itemLevelLabel"
-            app:layout_constraintTop_toBottomOf="@id/itemImageAndName"
-            app:layout_constraintBottom_toTopOf="@id/itemDamage"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/itemMaxHealth"
             />
-
-        <TextView
-            android:id="@+id/itemDamageLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/gap_16"
-            android:paddingVertical="@dimen/gap_8"
-            android:text="@string/damage_label"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_16"
-            app:layout_constraintEnd_toStartOf="@id/itemDamage"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/itemLevelLabel" />
-
-        <TextView
-            android:id="@+id/itemDamage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/gap_16"
-            android:paddingVertical="@dimen/gap_8"
-            tools:text="Sebzés"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_16"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/itemDamageLabel"
-            app:layout_constraintTop_toBottomOf="@id/itemLevel" />
 
         <TextView
             android:id="@+id/itemMaxHealthLabel"
@@ -132,7 +119,8 @@
             android:textSize="@dimen/text_16"
             app:layout_constraintEnd_toStartOf="@id/itemMaxHealth"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/itemDamageLabel" />
+            app:layout_constraintTop_toBottomOf="@id/itemLevelLabel"
+            app:layout_constraintBottom_toTopOf="@id/itemExperienceLabel"/>
 
         <TextView
             android:id="@+id/itemMaxHealth"
@@ -146,7 +134,188 @@
             android:textSize="@dimen/text_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/itemMaxHealthLabel"
-            app:layout_constraintTop_toBottomOf="@id/itemDamage" />
+            app:layout_constraintTop_toBottomOf="@id/itemLevel"
+            app:layout_constraintBottom_toTopOf="@id/itemExperience"/>
+
+        <TextView
+            android:id="@+id/itemExperienceLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            android:text="@string/experience_label"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toStartOf="@id/itemExperience"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemMaxHealthLabel"
+            app:layout_constraintBottom_toTopOf="@id/itemDamageLabel"/>
+
+        <TextView
+            android:id="@+id/itemExperience"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            tools:text="@string/experience_label"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/itemExperienceLabel"
+            app:layout_constraintTop_toBottomOf="@id/itemMaxHealth"
+            app:layout_constraintBottom_toTopOf="@id/itemDamage"/>
+
+        <TextView
+            android:id="@+id/itemDamageLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            android:text="@string/damage_label"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toStartOf="@id/itemDamage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemExperienceLabel"
+            app:layout_constraintBottom_toTopOf="@id/itemCriticalHitChanceLabel"/>
+
+        <TextView
+            android:id="@+id/itemDamage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            tools:text="Sebzés"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/itemDamageLabel"
+            app:layout_constraintTop_toBottomOf="@id/itemExperience"
+            app:layout_constraintBottom_toTopOf="@id/itemCriticalHitChance"/>
+
+        <TextView
+            android:id="@+id/itemCriticalHitChanceLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            android:text="@string/critical_hit_chance_label"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toStartOf="@id/itemCriticalHitChance"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemDamageLabel"
+            app:layout_constraintBottom_toTopOf="@id/itemBlockChanceLabel"/>
+
+        <TextView
+            android:id="@+id/itemCriticalHitChance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            tools:text="@string/critical_hit_chance_label"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/itemCriticalHitChanceLabel"
+            app:layout_constraintTop_toBottomOf="@id/itemDamage"
+            app:layout_constraintBottom_toTopOf="@id/itemBlockChance"/>
+
+        <TextView
+            android:id="@+id/itemBlockChanceLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            android:text="@string/block_chance_label"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toStartOf="@id/itemBlockChance"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemCriticalHitChanceLabel"
+            app:layout_constraintBottom_toTopOf="@id/itemLifeStealLabel"/>
+
+        <TextView
+            android:id="@+id/itemBlockChance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            tools:text="@string/block_chance_label"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/itemBlockChanceLabel"
+            app:layout_constraintTop_toBottomOf="@id/itemCriticalHitChance"
+            app:layout_constraintBottom_toTopOf="@id/itemLifeSteal"/>
+
+        <TextView
+            android:id="@+id/itemLifeStealLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            android:text="@string/life_steal_label"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toStartOf="@id/itemLifeSteal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemBlockChanceLabel"
+            app:layout_constraintBottom_toTopOf="@id/itemPriceLabel"/>
+
+        <TextView
+            android:id="@+id/itemLifeSteal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            tools:text="@string/life_steal_label"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/itemLifeStealLabel"
+            app:layout_constraintTop_toBottomOf="@id/itemBlockChance"
+            app:layout_constraintBottom_toTopOf="@id/itemPrice"/>
+
+        <TextView
+            android:id="@+id/itemPriceLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            android:text="@string/item_price_label"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toStartOf="@id/itemPrice"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemLifeStealLabel" />
+
+        <TextView
+            android:id="@+id/itemPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/gap_16"
+            android:paddingVertical="@dimen/gap_8"
+            tools:text="@string/item_price_label"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/itemPriceLabel"
+            app:layout_constraintTop_toBottomOf="@id/itemLifeSteal" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
