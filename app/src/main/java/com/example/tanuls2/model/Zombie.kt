@@ -9,10 +9,3 @@ data class Zombie(
     val criticalHitChance:Float = 0.2f,
     var blockChance:Float = 0.3f
 )
-//    :Character(0,
-//                        1000,
-//                        1000,
-//                        1,
-//                        10,
-//                        0.2f,
-//                        0.3f)

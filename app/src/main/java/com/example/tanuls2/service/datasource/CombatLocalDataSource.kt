@@ -3,24 +3,29 @@ package com.example.tanuls2.service.datasource
 import com.example.tanuls2.db.dao.KnightDao
 import com.example.tanuls2.db.entity.KnightEntity
 import com.example.tanuls2.handler.SharedPreferencesHandler
-import com.example.tanuls2.model.EmptySlot
-import com.example.tanuls2.model.Item
-import com.example.tanuls2.model.Knight
-import com.example.tanuls2.model.Zombie
+import com.example.tanuls2.model.*
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class CombatLocalDataSource(val knightDao: KnightDao) {
 
+    var skillExtraDamage = Skill("Dupla ütés", 1,0,100,0f,0f,0f,true)
+    var skillPrecisionHit = Skill("Precíz ütés",1,0,0,0f,0.0f,0f,true)
+    var skillCriticalHit  = Skill ("Kritikus ütés",1,0,0,1.0f,0f,0f,true)
+    var skillLifeSteal  = Skill("Gyógyító ütés", 1,0,0,0f,0f,0.5f,true)
+    var skillHeal = Skill("Gyógyítás", 1,25,0,0f,0f,0f,false)
+    
     fun fetchLocalKnightData() : Single<KnightEntity> {
         return Single.fromCallable {
             if(SharedPreferencesHandler.isFirstStart()){
-                var itemList = arrayListOf<Item>()
+                var skillList = arrayListOf(skillExtraDamage,skillCriticalHit,skillPrecisionHit,skillLifeSteal,skillHeal)
+
+                    var itemList = arrayListOf<Item>()
                 for (i in 0..11) {
                     itemList.add(EmptySlot())
                 }
-                knightDao.insertKnight(knightEntity = KnightEntity(0,0,100,100,1,100,0.2f,0.2f, itemList))
+                knightDao.insertKnight(knightEntity = KnightEntity(0,0,100,100,1,100,0.2f,0.2f, itemList, skillList))
                 SharedPreferencesHandler.setFirstStart(false)
             }
             knightDao.getKnight()
@@ -36,7 +41,9 @@ class CombatLocalDataSource(val knightDao: KnightDao) {
 
     fun saveKnightToDb(knight: Knight) : Completable {
         return Completable.fromCallable {
-            knightDao.insertKnight(KnightEntity(0, knight.experience, knight.currentHealth, knight.maxHealth, knight.level, knight.damage, knight.criticalHitChance, knight.blockChance, knight.itemList))
+            knightDao.insertKnight(KnightEntity(0, knight.experience, knight.currentHealth, knight.maxHealth, knight.level, knight.damage, knight.criticalHitChance, knight.blockChance, knight.itemList, knight.skillList))
         }.subscribeOn(Schedulers.io())
     }
+
+
 }

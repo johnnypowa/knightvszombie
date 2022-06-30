@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.tanuls2.model.Item
+import com.example.tanuls2.model.Skill
 
 @Entity(tableName = "knight_table")
 data class KnightEntity(
@@ -15,5 +16,6 @@ data class KnightEntity(
     @ColumnInfo(name = "damage") val damage:Int,
     @ColumnInfo(name ="criticalHitChance") val criticalHitChance:Float,
     @ColumnInfo(name = "blockChance") val blockChance:Float,
-    @ColumnInfo(name= "items") val itemList: ArrayList<Item> = arrayListOf())
+    @ColumnInfo(name= "items") val itemList: ArrayList<Item> = arrayListOf(),
+    @ColumnInfo(name= "skills") val skillList: ArrayList<Skill> = arrayListOf())
 

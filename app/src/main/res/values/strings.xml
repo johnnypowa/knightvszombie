@@ -14,6 +14,12 @@
     <string name="knight_skill3">Precíz ütés</string>
     <string name="knight_skill4">Gyógyító ütés</string>
 
+    <string name="skill_double_hit">Dupla ütés</string>
+    <string name="skill_critical_hit">Kritikus ütés</string>
+    <string name="skill_precision_hit">Precíz ütés</string>
+    <string name="skill_life_steal_hit">Gyógyító ütés</string>
+
+
     <string name="knight_name_label">Lovag</string>
     <string name="enemy_name_label">Zombi</string>
     <string name="level_label">Szint</string>
