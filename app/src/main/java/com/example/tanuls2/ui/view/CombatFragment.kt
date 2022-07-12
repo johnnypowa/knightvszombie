@@ -317,38 +317,33 @@ class CombatFragment : Fragment() {
     }
 
     fun checkEquippedSkills(){
-        val skillListLength = combatViewModel.currentKnight!!.skillList.count()
         equippedSkillsList = arrayListOf()
-        for (i in 0..skillListLength-1) {
-            if(combatViewModel.currentKnight!!.skillList[i].equipped){
-                equippedSkillsList.add(combatViewModel.currentKnight!!.skillList[i])
-            }
-        }
+        equippedSkillsList = combatViewModel.currentKnight!!.skillList.filter { it.equipped } as ArrayList<Skill>
     }
 
     fun skillActivation(index : Int){
         checkEquippedSkills()
         clearZombieHitResults()
-        when(equippedSkillsList[index].skillName){
-            getString(R.string.skill_double_hit)->{
-             var extraDamageSkill = combatViewModel.currentKnight!!.skillList[index].damage
-             hitWithKnight(extraDamage = extraDamageSkill)
-         }
-            getString(R.string.skill_critical_hit)->{
+        when(equippedSkillsList[index].skillName) {
+            SkillName.DOUBLE_HIT -> {
+                var extraDamageSkill = combatViewModel.currentKnight!!.skillList[index].damage
+                 hitWithKnight(extraDamage = extraDamageSkill)
+            }
+            SkillName.CRITICAL_HIT -> {
                 val originalCriticalHitChance = combatViewModel.currentKnight!!.criticalHitChance
                 combatViewModel.currentKnight!!.criticalHitChance =
                     combatViewModel.currentKnight!!.skillList[index].criticalHitChance
                 hitWithKnight()
                 combatViewModel.currentKnight!!.criticalHitChance = originalCriticalHitChance
             }
-            getString(R.string.skill_precision_hit)->{
+            SkillName.PRECISION_HIT -> {
                 val originalBlockChance = zombie.blockChance
                 zombie.blockChance =
                     combatViewModel.currentKnight!!.skillList[index].blockChance
                 hitWithKnight()
                 zombie.blockChance = originalBlockChance
             }
-            getString(R.string.skill_life_steal_hit)->{
+            SkillName.LIFE_STEAL_HIT -> {
                 val actualHealthOfEnemy = zombie.currentHealth
                 hitWithKnight()
                 val damage = (actualHealthOfEnemy - zombie.currentHealth)*
@@ -365,6 +360,7 @@ class CombatFragment : Fragment() {
                     }
                 }
             }
+            SkillName.HEAL -> {}
 
         }
         printKnightParameter(combatViewModel.currentKnight!!)

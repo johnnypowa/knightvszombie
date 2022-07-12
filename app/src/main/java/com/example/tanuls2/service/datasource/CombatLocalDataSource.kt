@@ -10,16 +10,24 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class CombatLocalDataSource(val knightDao: KnightDao) {
 
-    var skillExtraDamage = Skill("Dupla ütés", 1,0,100,0f,0f,0f,true)
-    var skillPrecisionHit = Skill("Precíz ütés",1,0,0,0f,0.0f,0f,true)
-    var skillCriticalHit  = Skill ("Kritikus ütés",1,0,0,1.0f,0f,0f,true)
-    var skillLifeSteal  = Skill("Gyógyító ütés", 1,0,0,0f,0f,0.5f,true)
-    var skillHeal = Skill("Gyógyítás", 1,25,0,0f,0f,0f,false)
+    companion object {
+        const val DOUBLE_HIT = "Dupla ütés"
+        const val CRITICAL_HIT = "Kritikus ütés"
+        const val PRECISION_HIT  = "Precíz ütés"
+        const val LIFE_STEAL_HIT  = "Gyógyító ütés"
+        const val HEAL = "Gyógyítás"
+    }
+
+    var skillExtraDamage = Skill(DOUBLE_HIT, 1, 0, 100, 0f, 0f, 0f, true, SkillName.DOUBLE_HIT)
+    var skillPrecisionHit = Skill(PRECISION_HIT, 1, 0, 0, 0f, 0.0f, 0f, true, SkillName.PRECISION_HIT)
+    var skillCriticalHit  = Skill (CRITICAL_HIT, 1, 0, 0, 1.0f, 0f, 0f, true, SkillName.CRITICAL_HIT)
+    var skillLifeSteal  = Skill(LIFE_STEAL_HIT, 1, 0, 0, 0f, 0f, 0.5f, true, SkillName.LIFE_STEAL_HIT)
+    var skillHeal = Skill(HEAL, 1, 25, 0, 0f, 0f, 0f, false, SkillName.HEAL)
     
     fun fetchLocalKnightData() : Single<KnightEntity> {
         return Single.fromCallable {
             if(SharedPreferencesHandler.isFirstStart()){
-                var skillList = arrayListOf(skillExtraDamage,skillCriticalHit,skillPrecisionHit,skillLifeSteal,skillHeal)
+                var skillList = arrayListOf(skillExtraDamage, skillCriticalHit, skillPrecisionHit, skillLifeSteal, skillHeal)
 
                     var itemList = arrayListOf<Item>()
                 for (i in 0..11) {
