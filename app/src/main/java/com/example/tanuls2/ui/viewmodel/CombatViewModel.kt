@@ -43,7 +43,7 @@ class CombatViewModel(
                     knightEntityData.currentHealth, knightEntityData.maxHealth,
                     knightEntityData.level, knightEntityData.damage,
                     knightEntityData.criticalHitChance, knightEntityData.blockChance,
-                    knightEntityData.itemList), zombieData)
+                    knightEntityData.itemList, knightEntityData.skillList), zombieData)
             }
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(Schedulers.io())
