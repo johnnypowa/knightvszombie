@@ -582,13 +582,14 @@
             app:layout_constraintEnd_toStartOf="@+id/knightSkill2Id"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/skillsLabel"
-            app:srcCompat="@drawable/ic_brutal_hit"/>
+            tools:srcCompat = "@drawable/ic_brutal_hit"
+            />
 
         <TextView
             android:id="@+id/skill1Label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/knight_skill1"
+            tools:text="@string/knight_skill1"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/text_14"
@@ -608,13 +609,13 @@
             app:layout_constraintEnd_toStartOf="@+id/knightSkill3Id"
             app:layout_constraintStart_toEndOf="@+id/knightSkill1Id"
             app:layout_constraintTop_toBottomOf="@id/skillsLabel"
-            app:srcCompat="@drawable/ic_critical_hit"/>
+            tools:srcCompat="@drawable/ic_critical_hit"/>
 
         <TextView
             android:id="@+id/skill2Label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/knight_skill2"
+            tools:text="@string/knight_skill2"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/text_14"
@@ -634,14 +635,14 @@
             app:layout_constraintEnd_toStartOf="@+id/knightSkill4Id"
             app:layout_constraintStart_toEndOf="@+id/knightSkill2Id"
             app:layout_constraintTop_toBottomOf="@id/skillsLabel"
-            app:srcCompat="@drawable/ic_precision_hit"
+            tools:srcCompat="@drawable/ic_precision_hit"
             />
 
         <TextView
             android:id="@+id/skill3Label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/knight_skill3"
+            tools:text="@string/knight_skill3"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/text_14"
@@ -661,13 +662,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/knightSkill3Id"
             app:layout_constraintTop_toBottomOf="@id/skillsLabel"
-            app:srcCompat="@drawable/ic_life_steal"/>
+            tools:srcCompat="@drawable/ic_life_steal"/>
 
         <TextView
             android:id="@+id/skill4Label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/knight_skill4"
+            tools:text="@string/knight_skill4"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/text_14"

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -13,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tanuls2.R
-import com.example.tanuls2.handler.SharedPreferencesHandler
 import com.example.tanuls2.model.*
 import com.example.tanuls2.ui.view.adapter.InventoryAdapter
 import com.example.tanuls2.ui.viewmodel.InventoryViewModel
@@ -22,7 +20,6 @@ import com.example.tanuls2.ui.viewmodel.LoadInventory
 import com.example.tanuls2.ui.viewmodel.SuccessfulSave
 import com.example.tanuls2.util.SingleEvent
 import com.example.tanuls2.util.observe
-import kotlinx.android.synthetic.main.fragment_combat.*
 import kotlinx.android.synthetic.main.fragment_inventory.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -60,7 +57,7 @@ class InventoryFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ) : View? {
         return inflater.inflate(R.layout.fragment_inventory, container, false)
     }
 
@@ -68,7 +65,6 @@ class InventoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupToolbar()
-
     }
 
     private fun setupToolbar() {

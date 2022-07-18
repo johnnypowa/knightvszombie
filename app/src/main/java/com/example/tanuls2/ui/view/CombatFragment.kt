@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +25,7 @@ class CombatFragment : Fragment() {
     lateinit var zombie: Zombie
     var defeatAlertdialog: AlertDialog? = null
     var victoryAlertdialog: AlertDialog? = null
-    var equippedSkillsList : ArrayList<Skill> = arrayListOf()
+    var equippedSkillsList: ArrayList<Skill> = arrayListOf()
 
     val combatViewModel: CombatViewModel by viewModel()
 
@@ -110,6 +112,42 @@ class CombatFragment : Fragment() {
     fun showAllData(knightData: Knight, zombieData: Zombie){
         showKnightContent(knightData)
         showEnemyZombieContent(zombieData)
+        checkEquippedSkills()
+        setUpSkillBar()
+
+    }
+
+    fun setUpSkillBar(){
+        for(index in 0..3){
+
+            var skillImageView: ImageView? = null
+            var skillLabel: TextView? = null
+
+            when(index){
+                0 -> { skillImageView = knightSkill1Id
+                    skillLabel = skill1Label}
+                1 -> {skillImageView = knightSkill2Id
+                    skillLabel = skill2Label}
+                2 -> {skillImageView = knightSkill3Id
+                    skillLabel = skill3Label}
+                3 -> {skillImageView = knightSkill4Id
+                    skillLabel = skill4Label}
+            }
+
+            when(equippedSkillsList[index].skillName){
+
+                SkillName.DOUBLE_HIT -> {skillImageView!!.setImageResource(R.drawable.ic_brutal_hit)
+                    skillLabel!!.text = equippedSkillsList[index].skillLabel}
+                SkillName.CRITICAL_HIT -> {skillImageView!!.setImageResource(R.drawable.ic_critical_hit)
+                    skillLabel!!.text = equippedSkillsList[index].skillLabel}
+                SkillName.PRECISION_HIT -> {skillImageView!!.setImageResource(R.drawable.ic_precision_hit)
+                    skillLabel!!.text = equippedSkillsList[index].skillLabel}
+                SkillName.LIFE_STEAL_HIT -> {skillImageView!!.setImageResource(R.drawable.ic_life_steal)
+                    skillLabel!!.text = equippedSkillsList[index].skillLabel}
+                SkillName.HEAL -> {skillImageView!!.setImageResource(R.drawable.ic_healing)
+                    skillLabel!!.text = equippedSkillsList[index].skillLabel}
+            }
+        }
     }
 
     fun showKnightContent(knightData: Knight) {
@@ -321,25 +359,25 @@ class CombatFragment : Fragment() {
         equippedSkillsList = combatViewModel.currentKnight!!.skillList.filter { it.equipped } as ArrayList<Skill>
     }
 
-    fun skillActivation(index : Int){
+    fun skillActivation(index: Int){
         checkEquippedSkills()
         clearZombieHitResults()
         when(equippedSkillsList[index].skillName) {
             SkillName.DOUBLE_HIT -> {
-                var extraDamageSkill = combatViewModel.currentKnight!!.skillList[index].damage
+                var extraDamageSkill = equippedSkillsList[index].damage
                  hitWithKnight(extraDamage = extraDamageSkill)
             }
             SkillName.CRITICAL_HIT -> {
                 val originalCriticalHitChance = combatViewModel.currentKnight!!.criticalHitChance
                 combatViewModel.currentKnight!!.criticalHitChance =
-                    combatViewModel.currentKnight!!.skillList[index].criticalHitChance
+                    equippedSkillsList[index].criticalHitChance
                 hitWithKnight()
                 combatViewModel.currentKnight!!.criticalHitChance = originalCriticalHitChance
             }
             SkillName.PRECISION_HIT -> {
                 val originalBlockChance = zombie.blockChance
                 zombie.blockChance =
-                    combatViewModel.currentKnight!!.skillList[index].blockChance
+                    equippedSkillsList[index].blockChance
                 hitWithKnight()
                 zombie.blockChance = originalBlockChance
             }
@@ -347,9 +385,9 @@ class CombatFragment : Fragment() {
                 val actualHealthOfEnemy = zombie.currentHealth
                 hitWithKnight()
                 val damage = (actualHealthOfEnemy - zombie.currentHealth)*
-                        combatViewModel.currentKnight!!.skillList[index].lifeSteal
+                        equippedSkillsList[index].lifeSteal
                 val modifiedHealth =
-                    combatViewModel.currentKnight!!.currentHealth +damage
+                    combatViewModel.currentKnight!!.currentHealth + damage
                 combatViewModel.currentKnight!!.currentHealth =
                     when (modifiedHealth >= combatViewModel.currentKnight!!.maxHealth) {
                     true -> {
@@ -358,9 +396,24 @@ class CombatFragment : Fragment() {
                     else -> {
                         modifiedHealth.toInt()
                     }
-                }
+                    }
             }
-            SkillName.HEAL -> {}
+            SkillName.HEAL -> {
+                clearKnightHitResults()
+                clearZombieHitResults()
+                val modifiedHealth = combatViewModel.currentKnight!!.currentHealth +
+                        equippedSkillsList[index].health
+                combatViewModel.currentKnight!!.currentHealth =
+                    when (modifiedHealth >= combatViewModel.currentKnight!!.maxHealth) {
+                    true -> {
+                        combatViewModel.currentKnight!!.maxHealth
+                    }
+                    else -> {
+                        modifiedHealth
+                    }
+                }
+                printKnightParameter(combatViewModel.currentKnight!!)
+            }
 
         }
         printKnightParameter(combatViewModel.currentKnight!!)
