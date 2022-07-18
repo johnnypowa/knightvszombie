@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -53,6 +54,18 @@ class SkillsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupToolbar()
+
+        skillsSave.setOnClickListener {
+            saveSkills()
+        }
+    }
+
+    fun saveSkills() {
+        if(skillsAdapter.skillList.filter { it.equipped }.count() == 4){
+            skillsLoadingIndicator(true)
+            skillsViewModel.saveKnightToDb()
+        }else{
+            Toast.makeText(context, "4 db képességet kell felvenni!", Toast.LENGTH_SHORT).show()}
     }
 
     private fun setupToolbar() {
@@ -97,14 +110,10 @@ class SkillsFragment : Fragment() {
                 R.id.skillEquip -> {
                     item.equipped = true
                     skillsAdapter.notifyDataSetChanged()
-                    skillsLoadingIndicator(true)
-                    skillsViewModel.saveKnightToDb()
                 }
                 R.id.skillUnEquip -> {
                     item.equipped = false
                     skillsAdapter.notifyDataSetChanged()
-                    skillsLoadingIndicator(true)
-                    skillsViewModel.saveKnightToDb()
                 }
             }
             true
