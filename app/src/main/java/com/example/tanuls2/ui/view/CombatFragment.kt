@@ -118,34 +118,31 @@ class CombatFragment : Fragment() {
     }
 
     fun setUpSkillBar(){
-        for(index in 0..3){
+        val knightSkillIdList = arrayListOf(knightSkill1Id, knightSkill2Id, knightSkill3Id, knightSkill4Id)
+        val skillLabelIdList = arrayListOf(skill1Label, skill2Label, skill3Label, skill4Label)
 
-            var skillImageView: ImageView? = null
-            var skillLabel: TextView? = null
-
-            when(index){
-                0 -> { skillImageView = knightSkill1Id
-                    skillLabel = skill1Label}
-                1 -> {skillImageView = knightSkill2Id
-                    skillLabel = skill2Label}
-                2 -> {skillImageView = knightSkill3Id
-                    skillLabel = skill3Label}
-                3 -> {skillImageView = knightSkill4Id
-                    skillLabel = skill4Label}
-            }
-
-            when(equippedSkillsList[index].skillName){
-
-                SkillName.DOUBLE_HIT -> {skillImageView!!.setImageResource(R.drawable.ic_brutal_hit)
-                    skillLabel!!.text = equippedSkillsList[index].skillLabel}
-                SkillName.CRITICAL_HIT -> {skillImageView!!.setImageResource(R.drawable.ic_critical_hit)
-                    skillLabel!!.text = equippedSkillsList[index].skillLabel}
-                SkillName.PRECISION_HIT -> {skillImageView!!.setImageResource(R.drawable.ic_precision_hit)
-                    skillLabel!!.text = equippedSkillsList[index].skillLabel}
-                SkillName.LIFE_STEAL_HIT -> {skillImageView!!.setImageResource(R.drawable.ic_life_steal)
-                    skillLabel!!.text = equippedSkillsList[index].skillLabel}
-                SkillName.HEAL -> {skillImageView!!.setImageResource(R.drawable.ic_healing)
-                    skillLabel!!.text = equippedSkillsList[index].skillLabel}
+        equippedSkillsList.forEachIndexed { index, element ->
+            when(element.skillName) {
+                SkillName.DOUBLE_HIT -> {
+                    knightSkillIdList[index].setImageResource(R.drawable.ic_brutal_hit)
+                    skillLabelIdList[index].text = equippedSkillsList[index].skillLabel
+                }
+                SkillName.CRITICAL_HIT -> {
+                    knightSkillIdList[index].setImageResource(R.drawable.ic_critical_hit)
+                    skillLabelIdList[index].text = equippedSkillsList[index].skillLabel
+                }
+                SkillName.PRECISION_HIT -> {
+                    knightSkillIdList[index].setImageResource(R.drawable.ic_precision_hit)
+                    skillLabelIdList[index].text = equippedSkillsList[index].skillLabel
+                }
+                SkillName.LIFE_STEAL_HIT -> {
+                    knightSkillIdList[index].setImageResource(R.drawable.ic_life_steal)
+                    skillLabelIdList[index].text = equippedSkillsList[index].skillLabel
+                }
+                SkillName.HEAL -> {
+                    knightSkillIdList[index].setImageResource(R.drawable.ic_healing)
+                    skillLabelIdList[index].text = equippedSkillsList[index].skillLabel
+                }
             }
         }
     }
