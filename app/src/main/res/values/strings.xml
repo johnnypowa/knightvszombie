@@ -46,4 +46,6 @@
     <string name="item_details_toolbar_title">Tulajdonságok</string>
     <string name="skills_toolbar_title">Képességek</string>
 
+    <string name="skills_save">Mentés</string>
+
 </resources>

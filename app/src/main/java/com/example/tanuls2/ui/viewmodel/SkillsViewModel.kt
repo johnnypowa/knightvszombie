@@ -1,12 +1,11 @@
 package com.example.tanuls2.ui.viewmodel
 
-
 import android.view.View
 import androidx.lifecycle.ViewModel
 import com.example.tanuls2.domain.LoadKnightDataUseCase
 import com.example.tanuls2.domain.SaveKnightToDbUseCase
-import com.example.tanuls2.model.Item
 import com.example.tanuls2.model.Knight
+import com.example.tanuls2.model.Skill
 import com.example.tanuls2.util.OnceLiveEvent
 import com.example.tanuls2.util.SingleEvent
 import com.example.tanuls2.util.plusAssign
@@ -15,19 +14,19 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
-class InventoryViewModel(private val loadKnightDataUseCase: LoadKnightDataUseCase,
-                         private val saveKnightToDbUseCase: SaveKnightToDbUseCase) : ViewModel() {
+class SkillsViewModel(private val loadKnightDataUseCase: LoadKnightDataUseCase,
+                      private val saveKnightToDbUseCase: SaveKnightToDbUseCase) : ViewModel() {
 
     val onceLiveEvent = OnceLiveEvent<SingleEvent>() //Live data
-    var currentItems: ArrayList<Item> = arrayListOf()
+    var skillList: ArrayList<Skill> = arrayListOf()
     var currentKnight: Knight? = null
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    fun onItemClicked(item: Item, view: View) {
-        onceLiveEvent.postValue(ItemClick(item, view))
+    fun onSkillClicked(item: Skill, view: View) {
+        onceLiveEvent.postValue(ClickOnSkill(item, view))
     }
 
-    fun loadAllInventory() {
+    fun loadAllSkills() {
         compositeDisposable += loadKnightDataUseCase.execute()
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(Schedulers.io())
@@ -37,9 +36,9 @@ class InventoryViewModel(private val loadKnightDataUseCase: LoadKnightDataUseCas
                         knightEntityData.currentHealth, knightEntityData.maxHealth,
                         knightEntityData.level, knightEntityData.damage,
                         knightEntityData.criticalHitChance, knightEntityData.blockChance,
-                        knightEntityData.itemList, knightEntityData.skillList)
-                    currentItems = currentKnight!!.itemList
-                    onceLiveEvent.postValue(LoadInventory(currentItems))
+                        knightEntityData.itemList,knightEntityData.skillList)
+                    skillList = currentKnight!!.skillList
+                    onceLiveEvent.postValue(LoadSkills(skillList))
                 },{
                     onceLiveEvent.postValue(ShowError(it.message))
                 }
@@ -63,6 +62,5 @@ class InventoryViewModel(private val loadKnightDataUseCase: LoadKnightDataUseCas
         compositeDisposable.clear()
     }
 }
-
-class ItemClick(val item: Item, val view: View) : SingleEvent
-class LoadInventory(val loadItemList: ArrayList<Item>) : SingleEvent
+class ClickOnSkill(val item: Skill, val view: View) : SingleEvent
+class LoadSkills(val loadSkillList: ArrayList<Skill>) : SingleEvent

@@ -11,8 +11,10 @@
         <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/drawable/ic_brutal_hit.xml" value="0.199" />
         <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/drawable/ic_critical_hit.xml" value="0.1365" />
         <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/drawable/ic_empty.xml" value="0.171" />
+        <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/drawable/ic_healing.xml" value="0.1" />
         <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/drawable/ic_knight.xml" value="0.171" />
         <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/drawable/ic_potion.xml" value="0.171" />
+        <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/drawable/ic_precision_hit.xml" value="0.1" />
         <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/drawable/ic_swords.xml" value="0.171" />
         <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/drawable/ic_zombie.xml" value="0.171" />
         <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/drawable/rounded_background.xml" value="0.133" />
@@ -22,13 +24,15 @@
         <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/layout/fragment_combat.xml" value="0.2" />
         <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/layout/fragment_inventory.xml" value="0.176" />
         <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/layout/fragment_item_datail.xml" value="0.1570945945945946" />
-        <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/layout/fragment_skills.xml" value="0.1" />
+        <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/layout/fragment_skills.xml" value="0.2" />
         <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/layout/toolbar.xml" value="0.1" />
         <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/menu/menu_bottom_navigation.xml" value="0.15472972972972973" />
         <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/menu/menu_inventory_popup.xml" value="0.1570945945945946" />
         <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/menu/menu_item_popup_equipped.xml" value="0.1570945945945946" />
         <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/menu/menu_item_popup_unequip.xml" value="0.1570945945945946" />
         <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/menu/menu_item_popup_unequipped.xml" value="0.1570945945945946" />
+        <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/menu/menu_skill_popup_equipped.xml" value="0.1570945945945946" />
+        <entry key="..\:/Users/johnny/AndroidStudioProjects/Tanuls2/app/src/main/res/menu/menu_skill_popup_unequipped.xml" value="0.1570945945945946" />
       </map>
     </option>
   </component>

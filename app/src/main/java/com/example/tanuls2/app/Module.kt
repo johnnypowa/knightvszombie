@@ -13,6 +13,7 @@ import org.koin.dsl.module
 import com.example.tanuls2.service.repository.InventoryRepository
 import com.example.tanuls2.service.repository.SkillsRepository
 import com.example.tanuls2.ui.viewmodel.InventoryViewModel
+import com.example.tanuls2.ui.viewmodel.SkillsViewModel
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -45,6 +46,7 @@ val useCaseModule = module {
 val viewModelModule = module {
     viewModel { CombatViewModel(get(), get(), get(),get()) }
     viewModel { InventoryViewModel(get(),get()) }
+    viewModel { SkillsViewModel(get(),get()) }
 }
 
 val apiModule = module {
@@ -92,10 +94,6 @@ val appDataBaseModule = module {
     fun provideKnightDao(database: AppDatabase) : KnightDao {
         return database.knightDao()
     }
-
-//    fun provideDatabase1(context: Context) : AppDatabase {
-//       return Room.databaseBuilder(context, AppDatabase::class.java, "app_database").build()
-//   }
 
     single { provideDatabase(get()) }
     single { provideKnightDao(get()) }
